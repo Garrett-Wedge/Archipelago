@@ -1,0 +1,61 @@
+Location:
+    -
+        Name: Cerulean City Gym Badge
+        FileName: CeruleanGym.asm
+        LocationReqs: Cerulean Gym Trainers
+        HasPKMN: No
+        Type: Gym
+        WildTableList:
+        FlagReqs:
+            - Kanto Mode
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        ItemUnlock:
+        Tags:
+          -
+            Name: Leader
+            SubTags:
+              - Cerulean
+        InfeasibleBadges:
+        HintName: Cerulean
+        NormalBadge: Cascade Badge
+        BadgeLine: |
+                CeruleanGymMistyScript:
+                    faceplayer
+                    opentext
+                    checkevent EVENT_BEAT_MISTY
+                    iftrue .FightDone
+                    writetext MistyIntroText
+                    waitbutton
+                    closetext
+                    winlosstext MistyWinLossText, 0
+                    loadtrainer MISTY, MISTY1
+                    startbattle
+                    reloadmapafterbattle
+                    setevent EVENT_BEAT_MISTY
+                    setevent EVENT_BEAT_SWIMMERF_DIANA
+                    setevent EVENT_BEAT_SWIMMERF_BRIANA
+                    setevent EVENT_BEAT_SWIMMERM_PARKER
+                    opentext
+                    BADGELINE
+        Code:
+        Text:
+            -
+                File: CeruleanGym.asm
+                Text: |
+                    UnknownText_0x18870c:
+                        text "MISTY: You really"
+                        line "are good…"
+
+                        para "I'll admit that"
+                        line "you are skilled…"
+
+                        para "Here you go. It's"
+                        line "BADGENAME."
+                        done
+
+                    UnknownText_0x188768:
+                        text "<PLAYER> received"
+                        line "BADGENAME."
+                        done

@@ -1,0 +1,65 @@
+Location:
+    -
+        Name: Celadon Gym
+        FileName: CeladonGym.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList:
+        LocationReqs: Celadon City
+        FlagReqs:
+            - Hive Badge
+        ItemReqs:
+            - Cut
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        HintName: Celadon
+        AREALV: 32
+        TrainerList:
+            - TWINS 5
+            - TWINS 6
+            - LASS 9
+            - BEAUTY 14
+            - PICNICKER 19
+            - ERIKA 1
+        Sublocations:
+            -
+                Name: Erika TM
+                FileName: CeladonGym.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Celadon Gym
+                FlagReqs:
+                    - Hive Badge
+                ItemReqs:
+                    - Cut
+                FlagsSet:
+                Tags:
+                    -
+                        Name: Leader
+                        SubTags:
+                            - Celadon
+                ReachableReqs:
+                NormalItem: TM_GIGA_DRAIN
+                Code: |
+                    .FightDone:
+                        checkevent EVENT_GOT_TM19_GIGA_DRAIN
+                        iftrue .GotGigaDrain
+                        writetext ErikaExplainTMText
+                        promptbutton
+                        ITEMLINE
+                        iffalse .GotGigaDrain
+                        setevent EVENT_GOT_TM19_GIGA_DRAIN
+                Text: |
+                    UnknownText_0x72cb0:
+                        text "ERIKA: That was a"
+                        line "delightful match."
+
+                        para "I felt inspired."
+                        line "Please, I wish you"
+                        cont "to have this TM."
+
+                        para "It is ITEMNAME."
+                TrainerList:

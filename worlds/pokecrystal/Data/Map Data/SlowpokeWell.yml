@@ -1,0 +1,136 @@
+Location:  
+    -
+        Name: Slowpoke Well Floor 1
+        FileName: SlowpokeWellB1F.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: SLOWPOKE_WELL_B1F
+        LocationReqs: Azalea Town
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+            - Saved Slowpokes
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 8
+        TrainerList:
+            - GRUNTF 1
+            - GRUNTM 1
+            - GRUNTM 2
+            - GRUNTM 29
+        HintName: Slowpoke
+        Sublocations:
+            - 
+                Name: Slowpoke Well Floor 1 Super Potion
+                FileName: SlowpokeWellB1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Slowpoke Well Floor 1
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: SUPER_POTION
+                IsBall: Yes
+                Code: |
+                    SlowpokeWellB1FSuperPotion:
+                        ITEMLINE
+                Text:
+                TrainerList:
+                Sublocations:
+    -
+        Name: Slowpoke Well Floor 2
+        FileName: SlowpokeWellB2F.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: SLOWPOKE_WELL_B2F
+        LocationReqs:  Slowpoke Well Floor 1
+        FlagReqs:
+            - Plain Badge
+            - Fog Badge
+        ItemReqs:
+            - Surf
+            - Strength
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+            - 
+                Name: King's Rock Guy
+                FileName: SlowpokeWellB2F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Slowpoke Well Floor 2
+                FlagReqs:
+                    - Plain Badge
+                    - Fog Badge
+                ItemReqs:
+                    - Surf
+                    - Strength
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: KINGS_ROCK
+                Code: |
+                    SlowpokeWellB2FGymGuyScript:
+                        faceplayer
+                        opentext
+                        checkevent EVENT_GOT_KINGS_ROCK_IN_SLOWPOKE_WELL
+                        iftrue .GotKingsRock
+                        writetext SlowpokeWellB2FGymGuyText
+                        promptbutton
+                        ITEMLINE
+                        iffalse .NoRoom
+                        setevent EVENT_GOT_KINGS_ROCK_IN_SLOWPOKE_WELL
+                    .NoRoom:
+                        closetext
+                        end
+                Text: |
+                    UnknownText_0x5ad2a:
+                        text "I'm waiting to see"
+                        line "SLOWPOKE's moment"
+                        cont "of evolution."
+
+                        para "Through observa-"
+                        line "tion, I made a new"
+                        cont "discovery."
+
+                        para "A SLOWPOKE with a"
+                        line "KING'S ROCK often"
+
+                        para "gets bitten by a"
+                        line "SHELLDER."
+
+                        para "Here, I'll share a"
+                        line "ITEMNAME with"
+                        cont "you."
+                        done
+                TrainerList:
+                Sublocations:
+            - 
+                Name: Slowpoke Well Rain Dance TM
+                FileName: SlowpokeWellB2F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Slowpoke Well Floor 2
+                FlagReqs:
+                    - Plain Badge
+                    - Fog Badge
+                ItemReqs:
+                    - Surf
+                    - Strength
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: TM_RAIN_DANCE
+                IsBall: Yes
+                Code: |
+                    SlowpokeWellB2FTMRainDance:
+                        ITEMLINE
+                Text: 
+                TrainerList:
+                Sublocations:

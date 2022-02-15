@@ -1,0 +1,60 @@
+Location:
+    -
+        Name: Cerulean Gym
+        FileName: CeruleanGym.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Cerulean City
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: Cerulean
+        Sublocations:
+            -
+                Name: Hidden Machine Part
+                FileName: CeruleanGym.asm
+                SecondaryFile: CeruleanGym.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Cerulean City
+                FlagReqs:
+                    - Power Plant
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem:
+                IsSpecial: Yes
+                Code: |
+                    CeruleanGymHiddenMachinePart:
+                        ITEMLINE
+                SecondaryCode: '    bg_event  3,  8, BGEVENT_ITEM, CeruleanGymHiddenMachinePart'
+
+                Text:
+                TrainerList:
+            -
+                Name: Cerulean Gym Trainers
+                FileName: CeruleanGym.asm
+                Type: Map
+                HasPKMN: Yes
+                WildTableList:
+                LocationReqs: Cerulean Gym
+                FlagReqs:
+                    - Date Ruined
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Code:
+                Text:
+                AREALV: 32
+                TrainerList:
+                    - SWIMMERM 21
+                    - SWIMMERF 19
+                    - SWIMMERF 18
+                    - MISTY 1
+                Sublocations:

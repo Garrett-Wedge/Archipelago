@@ -1,0 +1,44 @@
+Location:
+    -
+        Name: Route 8
+        FileName: Route8.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+            - ROUTE_8
+        LocationReqs:
+            - Saffron City Entrance
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 32
+        TrainerList: 
+            - BIKER 3
+            - BIKER 4
+            - BIKER 5
+            - SUPER_NERD 6
+            - SUPER_NERD 7
+        Sublocations:        
+            -
+                Name: Route 8 PRZCureBerry
+                FileName: Route8.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 8
+                FlagReqs:
+                    - Berry Trees
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Text:
+                TrainerList:
+                NormalItem: PRZCUREBERRY
+                IsBerry: Yes
+                BerryFlag: 275
+                Code: |
+                  Route8FruitTree:
+                      ITEMLINE

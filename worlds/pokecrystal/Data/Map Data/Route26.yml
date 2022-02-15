@@ -1,0 +1,97 @@
+Location:
+    -
+        Name: Route 26 Entrance
+        FileName: Route26.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+        LocationReqs: Route 27 Right Side
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 26 Entrance
+        FileName: Route26.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+        LocationReqs: League Gate via Viridian
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 26
+        FileName: Route26.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+        LocationReqs: Route 26 Entrance
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 26 Max Elixer
+        FileName: Route26.asm
+        Type: Item
+        HasPKMN: No
+        WildTableList: 
+            - Route_26
+        LocationReqs: Route 26
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        IsBall: Yes
+        NormalItem: MAX_ELIXER
+        Code: |
+            Route26MaxElixer:
+                ITEMLINE
+        Text:
+        AREALV: 28
+        HintName: Route 26
+        TrainerList: 
+            - COOLTRAINERF 9
+            - COOLTRAINERF 8
+            - COOLTRAINERM 10
+            - COOLTRAINERM 9
+            - PSYCHIC_T 9
+            - FISHER 21
+        Sublocations:
+        
+    -
+        Name: Route 26 Ice Berry
+        FileName: Route26.asm
+        Type: Item
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Route 26
+        FlagReqs:
+            - Berry Trees
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Text:
+        TrainerList:
+        NormalItem: ICE_BERRY
+        IsBerry: Yes
+        BerryFlag: 282
+        HintName: Route 26
+        Code: |
+          Route26FruitTree:
+              ITEMLINE
+ 

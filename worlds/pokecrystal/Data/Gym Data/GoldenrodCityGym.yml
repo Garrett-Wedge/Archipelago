@@ -1,0 +1,49 @@
+Location:
+    -
+        Name: Goldenrod City Gym
+        FileName: GoldenrodGym.asm
+        LocationReqs: Goldenrod Gym Trainers
+        HasPKMN: No
+        Type: Gym
+        WildTableList:
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        ItemUnlock: Strength
+        InfeasibleBadges:
+        NormalBadge: Plain Badge
+        HintName: Goldenrod
+        Tags:
+            -
+                Name: Leader
+                SubTags:
+                    - Goldenrod
+        BadgeLine: |
+            .StoppedCrying:
+                checkevent EVENT_GOT_TM45_ATTRACT
+                iftrue .GotAttract
+                writetext WhitneyWhatDoYouWantText
+                promptbutton
+                waitsfx
+                BADGELINE
+        Code:
+        Text:
+            -
+                File: GoldenrodGym.asm
+                Text: |
+                    UnknownText_0x54222:
+                        text "…Sniff…"
+
+                        para "What? What do you"
+                        line "want? A BADGE?"
+
+                        para "Oh, right."
+                        line "I forgot. Here's"
+                        cont "BADGENAME."
+                        done
+
+                    UnknownText_0x54273:
+                        text "<PLAYER> received"
+                        line "BADGENAME."
+                        done

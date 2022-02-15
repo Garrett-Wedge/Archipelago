@@ -1,0 +1,95 @@
+Location:
+    -
+        Name: Route 5
+        FileName: Route5.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+            - ROUTE_5
+        LocationReqs:
+            - Saffron City Entrance
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+            -
+                Name: Route 5 Cleanse Tag
+                FileName: Route5CleanseTagHouse.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs:
+                    - Route 5
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: CLEANSE_TAG
+                Code: |
+                    Route5CleanseTagHouseGrannyScript:
+                        faceplayer
+                        opentext
+                        checkevent EVENT_GOT_CLEANSE_TAG
+                        iftrue .GotCleanseTag
+                        writetext Route5CleanseTagHouseGrannyText1
+                        promptbutton
+                        ITEMLINE
+                        iffalse .NoRoom
+                        setevent EVENT_GOT_CLEANSE_TAG
+                    .GotCleanseTag:
+                        writetext Route5CleanseTagHouseGrannyText2
+                        waitbutton
+                    .NoRoom:
+                        closetext
+                        end
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Underground Path Hidden Full Restore
+                FileName: UndergroundPath.asm
+                SecondaryFile: UndergroundPath.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 5
+                FlagReqs:
+                    - Hidden Items
+                    - Kanto Power Restored
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: FULL_RESTORE
+                Code: |
+                    UndergroundPathHiddenFullRestore:
+                        ITEMLINE
+                SecondaryCode: '    bg_event  3,  9, BGEVENT_ITEM, UndergroundPathHiddenFullRestore'
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Underground Path Hidden X Special
+                FileName: UndergroundPath.asm
+                SecondaryFile: UndergroundPath.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 5
+                FlagReqs:
+                    - Hidden Items
+                    - Kanto Power Restored
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: X_SPECIAL
+                Code: |
+                    UndergroundPathHiddenXSpecial:
+                        ITEMLINE
+                SecondaryCode: '    bg_event  1, 19, BGEVENT_ITEM, UndergroundPathHiddenXSpecial'
+                Text:
+                TrainerList: 
+                Sublocations:

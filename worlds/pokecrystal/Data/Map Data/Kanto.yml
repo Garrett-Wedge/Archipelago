@@ -1,0 +1,18 @@
+Location:
+    -
+        Name: Kanto
+        FileName: 
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Elite Four
+        FlagReqs:
+            - Kanto Mode
+        ItemReqs:
+        FlagsSet:
+            - Became Champion
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:

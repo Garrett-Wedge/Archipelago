@@ -1,0 +1,199 @@
+Location:
+    -
+        Name: Dragons Den
+        FileName: BlackthornGym1F.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList:
+            - Dragons_Den_1F
+            - Dragons_Den_B1F
+        LocationReqs: Clair TM
+        FlagReqs:
+            - Fog Badge
+        ItemReqs:
+            - Surf
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 23
+        TrainerList: 
+            - COOLTRAINERF 21
+            - COOLTRAINERM 20
+            - TWINS 10
+            - TWINS 9
+        Sublocations:
+            -
+                Name: Dragons Den Max Elixer
+                FileName: DragonsDenB1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Dragons Den
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                IsBall: Yes
+                NormalItem: MAX_ELIXER
+                Code: |
+                    DragonsDenB1FMaxElixer:
+                        ITEMLINE
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Dragons Den Calcium
+                FileName: DragonsDenB1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Dragons Den
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                IsBall: Yes
+                NormalItem: CALCIUM
+                Code: |
+                    DragonsDenB1FCalcium:
+                        ITEMLINE
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Dragons Den Hidden Max Potion
+                FileName: DragonsDenB1F.asm
+                SecondaryFile: DragonsDenB1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Dragons Den
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: MAX_POTION
+                Code: |
+                    DragonsDenB1FHiddenMaxPotion:
+                        ITEMLINE
+                SecondaryCode: '    bg_event 21, 17, BGEVENT_ITEM, DragonsDenB1FHiddenMaxPotion'
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Dragons Den Hidden Revive
+                FileName: DragonsDenB1F.asm
+                SecondaryFile: DragonsDenB1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Dragons Den
+                FlagReqs:
+                    - Hidden Items
+                    - Fog Badge
+                    - Glacier Badge
+                ItemReqs:
+                    - Surf
+                    - Whirlpool
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: REVIVE
+                Code: |
+                    DragonsDenB1FHiddenRevive:
+                        ITEMLINE
+                SecondaryCode: '    bg_event 33, 29, BGEVENT_ITEM, DragonsDenB1FHiddenRevive'
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Dragons Den Hidden Max Elixer
+                FileName: DragonsDenB1F.asm
+                SecondaryFile: DragonsDenB1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Dragons Den
+                FlagReqs:
+                    - Hidden Items
+                    - Fog Badge
+                    - Glacier Badge
+                ItemReqs:
+                    - Surf
+                    - Whirlpool
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: MAX_ELIXER
+                Code: |
+                    DragonsDenB1FHiddenMaxElixer:
+                        ITEMLINE
+                SecondaryCode: '    bg_event 31, 15, BGEVENT_ITEM, DragonsDenB1FHiddenMaxElixer'
+                Text:
+                TrainerList: 
+                Sublocations:
+    -
+        Name: Dragons Den Shrine
+        FileName: DragonShrine.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Dragons Den
+        FlagReqs:
+            - Glacier Badge
+            - Fog Badge
+        ItemReqs:
+            - Surf
+            - Whirlpool
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: Dragons Den
+        Sublocations:
+            -
+                Name: Dragons Den Dragon Fang
+                FileName: DragonsDenB1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Dragons Den Shrine
+                FlagReqs:
+                    - Glacier Badge
+                    - Fog Badge
+                ItemReqs:
+                    - Surf
+                    - Whirlpool
+                FlagsSet:
+                ReachableReqs:
+                IsBall: Yes
+                NormalItem: DRAGON_FANG
+                Code: |
+                    DragonsDenB1FDragonFangScript:
+                    ; This whole script is written out rather than as an itemball
+                    ; because it's left over from the GS event.
+                        ITEMLINE
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Clair TM Banned
+                FileName: DragonsDenB1F.asm
+                Type: Map
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Dragons Den Shrine
+                FlagReqs:
+                    - Glacier Badge
+                    - Fog Badge
+                ItemReqs:
+                    - Surf
+                    - Whirlpool
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: 
+                Code:
+                Text:
+                TrainerList: 
+                Sublocations:

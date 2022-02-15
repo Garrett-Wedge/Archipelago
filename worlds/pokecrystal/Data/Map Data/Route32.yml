@@ -1,0 +1,308 @@
+Location:
+    -
+        Name: Route 32
+        FileName: Route32.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: Route_32
+        LocationReqs: 
+            - Falkner TM
+            - Violet Gym
+            - Violet City
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 32 Actual
+        FileName: Route32.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: Route_32
+        LocationReqs: Route 32
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 4
+        TrainerList: 
+            - YOUNGSTER 3
+            - PICNICKER 1
+            - CAMPER 1
+            - FISHER 5
+            - FISHER 1
+            - FISHER 2
+            - YOUNGSTER 4
+            - BIRD_KEEPER 13
+        HintName: Route 32
+        Sublocations:
+            -
+                Name: Miracle Seed Man
+                FileName: Route32.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Route 32
+                FlagReqs:
+                    - Zephyr Badge
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: MIRACLE_SEED
+                Code: |
+                    .GiveMiracleSeed:
+                        writetext Route32CooltrainerMText_HaveThisSeed
+                        promptbutton
+                        ITEMLINE
+                        iffalse .BagFull
+                        setevent EVENT_GOT_MIRACLE_SEED_IN_ROUTE_32
+                        sjump .GotMiracleSeed
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Route 32 Roar Dude
+                FileName: Route32.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Route 32
+                FlagReqs:
+                    - Hive Badge
+                ItemReqs:
+                    - Cut
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: TM_ROAR
+                Code: |
+                    Route32RoarTMGuyScript:
+                        faceplayer
+                        opentext
+                        checkevent EVENT_GOT_TM05_ROAR
+                        iftrue .AlreadyHaveRoar
+                        writetext Text_RoarIntro
+                        promptbutton
+                        ITEMLINE
+                        iffalse .Finish
+                        setevent EVENT_GOT_TM05_ROAR
+                    .AlreadyHaveRoar:
+                        writetext Text_RoarOutro
+                        waitbutton
+                    .Finish:
+                        closetext
+                        end
+                Text: |
+                    Text_RoarIntro:
+                        text "WROOOOAR!"
+                        line "PEOPLE RUN WHEN I"
+
+                        para "ITEMNAME! BUT YOU"
+                        line "CAME LOOKING!"
+
+                        para "THAT PLEASES ME!"
+                        line "NOW TAKE THIS!"
+                        done
+
+                    Text_RoarOutro:
+                        text "WROOOAR!"
+                        line "IT'S ITEMNAME!"
+
+                        para "EVEN #MON RUN"
+                        line "FROM A GOOD ITEMNAME!"
+                        done
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Route 32 Great Ball
+                FileName: Route32.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Route 32
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: GREAT_BALL
+                IsBall: Yes
+                Code: |
+                    Route32GreatBall:
+                        ITEMLINE
+
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Route 32 Repel
+                FileName: Route32.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Route 32
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: REPEL
+                IsBall: Yes
+                Code: |
+                    Route32Repel:
+                        ITEMLINE
+
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Old Rod Guru
+                FileName: Route32Pokecenter1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Route 32
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: OLD_ROD
+                Code: |
+                    Route32Pokecenter1FFishingGuruScript:
+                        faceplayer
+                        opentext
+                        checkevent EVENT_GOT_OLD_ROD
+                        iftrue .GotOldRod
+                        writetext Route32Pokecenter1FFishingGuruText_Question
+                        yesorno
+                        iffalse .Refused
+                        writetext Route32Pokecenter1FFishingGuruText_Yes
+                        promptbutton
+                        ITEMLINE
+                        writetext Route32Pokecenter1FFishingGuruText_GiveOldRod
+                        waitbutton
+                        closetext
+                        setevent EVENT_GOT_OLD_ROD
+                        end
+
+                Text: |
+                    UnknownText_0x69b83:
+                        text "This is a great"
+                        line "fishing spot."
+
+                        para "You saw people"
+                        line "fishing? How"
+                        cont "about you?"
+
+                        para "Would you like one"
+                        line "of my ITEMNAMES?"
+                        done
+
+                    UnknownText_0x69be8:
+                        text "Heh, that's good"
+                        line "to hear."
+
+                        para "Now you're an"
+                        line "angler too!"
+                        done
+
+                    UnknownText_0x69c1b:
+                        text "Fishing is great!"
+
+                        para "If there's water,"
+                        line "be it the sea or a"
+
+                        para "stream, try out"
+                        line "your ITEMNAME."
+                        done
+
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Route 32 Hidden Great Ball
+                FileName: Route32.asm
+                SecondaryFile: Route32.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 32
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: GREAT_BALL
+                Code: |
+                    Route32HiddenGreatBall:
+                        ITEMLINE
+                SecondaryCode: '    bg_event 11, 67, BGEVENT_ITEM, Route32HiddenGreatBall'
+                Text:
+                TrainerList:
+                Sublocations:
+            -
+                Name: Route 32 Hidden Super Potion
+                FileName: Route32.asm
+                SecondaryFile: Route32.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 32
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: SUPER_POTION
+                Code: |
+                    Route32HiddenSuperPotion:
+                        ITEMLINE
+                SecondaryCode: '    bg_event 11, 40, BGEVENT_ITEM, Route32HiddenSuperPotion'
+                Text:
+                TrainerList: 
+                Sublocations:
+                
+            -
+                Name: Route 32 Freida
+                FileName: Route32.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Route 32
+                FlagReqs:
+                    - Timed Events
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: POISON_BARB
+                Code: |
+                    .MetFrieda:
+                        writetext FriedaGivesGiftText
+                        promptbutton
+                        ITEMLINE
+                        iffalse .Done
+                        setevent EVENT_GOT_POISON_BARB_FROM_FRIEDA
+                        writetext FriedaGaveGiftText
+                        waitbutton
+                        closetext
+                        end
+
+                Text: |
+                    FriedaGaveGiftText:
+                        text "FRIEDA: Give it to"
+                        line "a #MON that has"
+                        cont "poison-type moves."
+
+                        para "Oh!"
+
+                        para "It's wicked!"
+
+                        para "You'll be shocked"
+                        line "how good it makes"
+                        cont "poison moves!"
+                        done
+
+                TrainerList: 
+                Sublocations:

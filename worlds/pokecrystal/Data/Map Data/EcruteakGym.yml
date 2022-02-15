@@ -1,0 +1,114 @@
+Location:
+    -
+        Name: Ecruteak Gym
+        FileName: EcruteakGym.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs: Burned Tower
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: Ecruteak
+        Sublocations:
+            -
+                Name: Morty TM
+                FileName: EcruteakGym.asm
+                Type: Item
+                HasPKMN: Yes
+                WildTableList: 
+                LocationReqs: Ecruteak Gym Trainers
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Tags:
+                    -
+                        Name: Leader
+                        SubTags:
+                            - Ecruteak
+                NormalItem: TM_SHADOW_BALL
+                Code: |
+                    .FightDone:
+                        checkevent EVENT_GOT_TM30_SHADOW_BALL
+                        iftrue .GotShadowBall
+                        setevent EVENT_BEAT_SAGE_JEFFREY
+                        setevent EVENT_BEAT_SAGE_PING
+                        setevent EVENT_BEAT_MEDIUM_MARTHA
+                        setevent EVENT_BEAT_MEDIUM_GRACE
+                        writetext MortyText_FogBadgeSpeech
+                        promptbutton
+                        ITEMLINE
+                        iffalse .NoRoomForShadowBall
+                        setevent EVENT_GOT_TM30_SHADOW_BALL
+                        writetext MortyText_ShadowBallSpeech
+                        waitbutton
+                        closetext
+                        end
+                Text: |
+                    UnknownText_0x9a0ec:
+                        text "It's ITEMNAME."
+                        line "It causes damage"
+
+                        para "and may reduce"
+                        line "SPCL.DEF."
+
+                        para "Use it if it"
+                        line "appeals to you."
+                        done
+                TrainerList: 
+                Sublocations:
+                    -
+                        Name: Suicune
+                        FileName: TinTower1F.asm
+                        Type: Map
+                        HasPKMN: No
+                        WildTableList: 
+                        LocationReqs: Morty TM
+                        FlagReqs:
+                        ItemReqs:
+                        FlagsSet:
+                        ReachableReqs:
+                        Code:
+                        Text:
+                        TrainerList: 
+                        Sublocations:
+            -
+                Name: Ecruteak Gym Trainers
+                FileName: EcruteakGym.asm
+                Type: Map
+                HasPKMN: Yes
+                WildTableList: 
+                LocationReqs: Ecruteak City
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Code:
+                Text:
+                AREALV: 15
+                TrainerList: 
+                        - SAGE 5
+                        - SAGE 6
+                        - MEDIUM 1
+                        - MEDIUM 2
+            -
+                Name: Ecruteak Gym Leader
+                FileName: EcruteakGym.asm
+                Type: Map
+                HasPKMN: Yes
+                WildTableList: 
+                LocationReqs: Ecruteak Gym Trainers
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Code:
+                Text:
+                AREALV: 15
+                TrainerList: 
+                        - MORTY 1

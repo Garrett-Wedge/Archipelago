@@ -1,0 +1,182 @@
+Location:
+    -
+        Name: Route 39 Entrance
+        FileName: Route39.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Route 39 via Route 38
+        FlagReqs:
+        ItemReqs:
+            - Squirtbottle
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Route 39 via Route 38
+        FileName: Route39.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList:
+        LocationReqs: Route 38 via Ecruteak
+        FlagReqs:
+        ItemReqs:
+            - Squirtbottle
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Route 39 Entrance
+        FileName: Route39.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Route 39 via Olivine
+        FlagReqs:
+        ItemReqs:
+            - Pass
+            - S S Ticket 
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Route 39 via Olivine
+        FileName: Route39.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList:
+        LocationReqs: Olivine City Entrance
+        FlagReqs:
+            - Hive Badge
+            - Kanto Mode
+        ItemReqs:
+            - Pass
+            - S S Ticket 
+            - Cut
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Route 39
+        FileName: Route39.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: Route_39
+        LocationReqs: Route 39 Entrance
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 16
+        TrainerList:
+            - PSYCHIC_T 6
+            - POKEFANM 2
+            - POKEFANF 2
+            - SAILOR 1
+            - POKEFANF 6
+        Sublocations:
+            -
+                Name: Route 39 Hidden Nugget
+                FileName: Route39.asm
+                SecondaryFile: Route39.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 39
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: NUGGET
+                Code: |
+                    Route39HiddenNugget:
+                        ITEMLINE
+                SecondaryCode: '    bg_event  5, 13, BGEVENT_ITEM, Route39HiddenNugget'
+                Text:
+                TrainerList: 
+                Sublocations:
+                
+            -   
+                Name: Route 39 Mint Berry
+                FileName: Route39.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 39
+                FlagReqs:
+                    - Berry Trees
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Text:
+                TrainerList:
+                NormalItem: MINT_BERRY
+                IsBerry: Yes
+                BerryFlag: 290
+                Code: |
+                  Route39FruitTree:
+                      ITEMLINE
+            -
+                Name: Route 39 Farmhouse Snore
+                FileName: Route39Farmhouse.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 39
+                FlagReqs:
+                    - Timed Events
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Text:
+                TrainerList:
+                NormalItem: TM_SNORE
+                Code: |
+                    FarmerFScript_GiveSnore:
+                        writetext FarmerFText_HealedMiltank
+                        promptbutton
+                        ITEMLINE
+                        iffalse FarmerFScript_NoRoomForSnore
+                        setevent EVENT_GOT_TM13_SNORE_FROM_MOOMOO_FARM
+            -
+                Name: Route 39 Pokefan Derek Nugget
+                FileName: Route39.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: 
+                    - Route 39
+                    - Most Map Access
+                FlagReqs:
+                    - Mon Locked Checks
+                    - Phone Call Trainers
+                ItemReqs:
+                    - Pokegear
+                FlagsSet:
+                ReachableReqs:
+                Text:
+                TrainerList:
+                MonReq: Pikachu
+                NormalItem: NUGGET
+                Code: |
+                    .HasNugget:
+                        scall .Gift
+                        ITEMLINE
+                        iffalse .NoRoom
+                        clearflag ENGINE_DEREK_HAS_NUGGET
+                        sjump .NumberAccepted

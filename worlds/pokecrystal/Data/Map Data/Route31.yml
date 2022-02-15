@@ -1,0 +1,166 @@
+Location:
+    -
+        Name: Route 31
+        FileName: Route31.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: Route_31
+        LocationReqs:
+            - Route 30 towards Route 31
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+            -
+                Name: Route 31 Potion
+                FileName: Route31.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Route 31
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: POTION
+                IsBall: Yes
+                Code: |
+                    Route31Potion:
+                        ITEMLINE
+                Text:
+                TrainerList: 
+            -
+                Name: Route 31 Pokeball
+                FileName: Route31.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Route 31
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                NormalItem: POKE_BALL
+                ReachableReqs:
+                IsBall: Yes
+                Code: |
+                    Route31PokeBall:
+                        ITEMLINE
+                Text:
+                TrainerList:
+            -
+                Name: Route 31 Kenya Item
+                FileName: Route31.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Route 31
+                FlagReqs: Kenya Obtained
+                ItemReqs:
+                FlagsSet: Kenya Traded
+                ReachableReqs:
+                NormalItem: TM_NIGHTMARE
+                Code: |
+                    .TryGiveKenya:
+                        writetext Text_Route31SleepyManGotMail
+                        promptbutton
+                        checkpokemail ReceivedSpearowMailText
+                        ifequal POKEMAIL_WRONG_MAIL, .WrongMail
+                        ifequal POKEMAIL_REFUSED, .Refused
+                        ifequal POKEMAIL_NO_MAIL, .NoMail
+                        ifequal POKEMAIL_LAST_MON, .LastMon
+                        ; POKEMAIL_CORRECT
+                        writetext Text_Route31HandOverMailMon
+                        promptbutton
+                        writetext Text_Route31ReadingMail
+                        promptbutton
+                        setevent EVENT_GAVE_KENYA
+                        ITEMLINE
+                        iffalse .NoRoomForItems
+                        setevent EVENT_GOT_TM50_NIGHTMARE
+                    .DescribeNightmare:
+                        writetext Text_Route31DescribeNightmare
+                        waitbutton
+                    .NoRoomForItems:
+                        closetext
+                        end
+                Text: |
+                    Text_Route31DescribeNightmare:
+                        text "ITEMNAME is NIGHTMARE."
+
+                        para "It's a wicked move"
+                        line "that steadily cuts"
+
+                        para "the HP of a sleep-"
+                        line "ing enemy."
+
+                        para "Ooooh…"
+                        line "That's scary…"
+
+                        para "I don't want to"
+                        line "have bad dreams."
+                        done
+                TrainerList:            
+            -
+                Name: Route 31 Trainers
+                FileName: Route31.asm
+                Type: Map
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Route 31
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Code:
+                Text:
+                AREALV: 3
+                TrainerList:
+                    - BUG_CATCHER 4
+                    
+            -
+                Name: Route 31 Bitter Berry
+                FileName: Route31.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 31
+                FlagReqs:
+                    - Berry Trees
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Text:
+                TrainerList:
+                NormalItem: BITTER_BERRY
+                IsBerry: Yes
+                BerryFlag: 276
+                Code: |
+                  Route31FruitTree:
+                      ITEMLINE
+            -
+                Name: Route 31 Bug Catcher Wade Berry
+                FileName: Route31.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 31
+                FlagReqs:
+                    - Phone Call Trainers
+                ItemReqs:
+                    - Pokegear
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: BERRY
+                IsBall: No
+                Code: |
+                    .Berry:
+                        ITEMLINE
+                        iffalse .PackFull
+                        sjump .Done
+                Text:
+                TrainerList: 
+                Sublocations:

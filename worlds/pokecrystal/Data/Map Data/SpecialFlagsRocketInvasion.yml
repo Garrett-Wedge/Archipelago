@@ -1,0 +1,275 @@
+Location:
+    -
+        Name: Rocket Invasion
+        FileName: Route5.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs:
+            - Goldenrod City Entrance
+            - Vermilion City Entrance
+        FlagReqs:
+            - Assumed Fill
+            - Fog Badge
+            - Kanto Mode
+        ItemReqs:
+            - Surf
+            - S S Ticket
+            - Squirtbottle
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Rocket Invasion
+        FileName: Route5.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs:
+            - Goldenrod City Entrance
+            - Saffron City Entrance
+        FlagReqs:
+            - Assumed Fill
+            - Fog Badge
+            - Zephyr Badge
+            - Kanto Mode
+        ItemReqs:
+            - Surf
+            - Pass
+            - Squirtbottle
+            - Flash
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Rocket Invasion
+        FileName: Route5.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs:
+            - Goldenrod City Entrance
+            - Vermilion City Entrance
+        FlagReqs:
+            - Assumed Fill
+            - Fog Badge
+            - Kanto Mode
+        ItemReqs:
+            - Surf
+            - S S Ticket
+            - Squirtbottle
+            - Secret Potion
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Rocket Invasion
+        FileName: Route5.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs:
+            - Goldenrod City Entrance
+            - Saffron City Entrance
+        FlagReqs:
+            - Assumed Fill
+            - Fog Badge
+            - Hive Badge
+            - Kanto Mode
+        ItemReqs:
+            - Surf
+            - Cut
+            - Pass
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Rocket Invasion
+        FileName: Route5.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs:
+            - Goldenrod City Entrance
+            - Vermilion City Entrance
+        FlagReqs:
+            - Assumed Fill
+            - Hive Badge
+            - Kanto Mode
+        ItemReqs:
+            - Cut
+            - S S Ticket
+            - Squirtbottle
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Rocket Invasion
+        FileName: Route5.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs:
+            - Goldenrod City Entrance
+            - Saffron City Entrance
+        FlagReqs:
+            - Assumed Fill
+            - Hive Badge
+            - Fog Badge
+            - Kanto Mode
+        ItemReqs:
+            - Cut
+            - Pass
+            - Surf
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Rocket Invasion
+        FileName: Route5.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs:
+            - Goldenrod City Entrance
+            - Ecruteak City Entrance
+        FlagReqs:
+            - Assumed Fill
+            - Fog Badge
+            - Plain Badge
+        ItemReqs:
+            - Surf
+            - Squirtbottle
+            - Strength
+            - Secret Potion
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Rocket Invasion
+        FileName: Route5.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs:
+            - Goldenrod City Entrance
+            - Saffron City Gym Badge
+            - Early Sabrina
+            - Vermilion City Entrance
+        FlagReqs:
+            - Assumed Fill
+            - Kanto Mode
+        ItemReqs:
+            - S S Ticket
+            - Squirtbottle
+            - Secret Potion
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Rocket Invasion
+        FileName: Route5.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs:
+            - Goldenrod City Entrance
+            - Saffron City Gym Badge
+            - Early Sabrina
+            - Saffron City Entrance
+        FlagReqs:
+            - Assumed Fill
+            - Kanto Mode
+        ItemReqs:
+            - Pass
+            - Squirtbottle
+            - Secret Potion
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Rocket Invasion
+        FileName: Route5.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs:
+            - Goldenrod City Entrance
+            - Saffron City Gym Badge
+            - Early Sabrina
+            - Saffron City Entrance
+        FlagReqs:
+            - Assumed Fill
+            - Zephyr Badge
+            - Fog Badge
+            - Kanto Mode
+        ItemReqs:
+            - Surf
+            - Flash
+            - Pass
+            - Secret Potion
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Rocket Invasion
+        FileName: Route5.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs:
+        FlagReqs:
+            - Assumed Fill
+            - Explicit Checking
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Early Sabrina
+        FileName: Route5.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs:
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:

@@ -1,0 +1,80 @@
+Location:
+    -
+        Name: Goldenrod Gym
+        FileName: GoldenrodGym.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs: Goldenrod City
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: Goldenrod
+        Sublocations:
+            -
+                Name: Whitney TM
+                FileName: GoldenrodGym.asm
+                Type: Item
+                HasPKMN: Yes
+                WildTableList: 
+                LocationReqs: Goldenrod Gym
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Tags:
+                    -
+                        Name: Leader
+                        SubTags:
+                            - Goldenrod
+                NormalItem: TM_ATTRACT
+                Code: |
+                    .GotPlainBadge:
+                        writetext WhitneyPlainBadgeText
+                        promptbutton
+                        ITEMLINE
+                        iffalse .NoRoomForAttract
+                        setevent EVENT_GOT_TM45_ATTRACT
+                        writetext WhitneyAttractText
+                        waitbutton
+                        closetext
+                        end
+                Text: |
+                    UnknownText_0x54302:
+                        text "It's ITEMNAME!"
+                        line "It makes full use"
+
+                        para "of a #MON's"
+                        line "charm."
+
+                        para "Isn't it just per-"
+                        line "fect for a cutie"
+                        cont "like me?"
+                        done
+                TrainerList: 
+                Sublocations:
+
+            -
+                Name: Goldenrod Gym Trainers
+                FileName: GoldenrodGym.asm
+                Type: Map
+                HasPKMN: Yes
+                WildTableList: 
+                LocationReqs: Goldenrod City
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Code:
+                Text:
+                AREALV: 14
+                TrainerList: 
+                        - BEAUTY 1
+                        - BEAUTY 2
+                        - LASS 1
+                        - LASS 2
+                        - WHITNEY 1

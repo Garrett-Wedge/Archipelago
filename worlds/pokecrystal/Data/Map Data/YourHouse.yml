@@ -1,0 +1,38 @@
+Location:
+    -
+        Name: Your House
+        FileName: PlayersHouse1F.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+            - NEW_BARK_TOWN
+        LocationReqs:
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: New Bark
+        Sublocations:
+            -
+                Name: Pokegear Gift
+                FileName: PlayersHouse1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Your House
+                FlagReqs:
+                    - Impossible
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Text:
+                TrainerList: 
+                Code: |
+                    MeetMomScript:
+                        opentext
+                        writetext ElmsLookingForYouText
+                        promptbutton
+                        ITEMLINE

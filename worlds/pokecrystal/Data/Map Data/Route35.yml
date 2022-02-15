@@ -1,0 +1,134 @@
+Location:
+    -
+        Name: Route 35 Entrance
+        FileName: Route35.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs: Route 35 via Goldenrod
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 35 via Goldenrod
+        FileName: Route35.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+        LocationReqs: Goldenrod City Entrance
+        FlagReqs:
+            - Hive Badge
+        ItemReqs:
+            - Cut
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 35 Entrance
+        FileName: Route35.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs: Route 35 via National Park
+        FlagReqs:
+        ItemReqs:
+            - Squirtbottle
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 12
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 35 via National Park
+        FileName: Route35.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs: National Park via Route 36
+        FlagReqs:
+        ItemReqs:
+            - Squirtbottle
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 12
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 35
+        FileName: Route35.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: ROUTE_35
+        LocationReqs: Route 35 Entrance
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 12
+        TrainerList: 
+            - CAMPER 4
+            - CAMPER 3
+            - PICNICKER 4
+            - PICNICKER 3
+            - JUGGLER 1
+            - FIREBREATHER 6
+            - OFFICER 2
+            - BUG_CATCHER 13
+            - BIRD_KEEPER 3
+        Sublocations:        
+            -
+                Name: Route 35 Rollout TM
+                FileName: Route35.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Route 35
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: TM_ROLLOUT
+                IsBall: Yes
+                Code: |
+                    Route35TMRollout:
+                        ITEMLINE
+                Text:
+                TrainerList: 
+                Sublocations:
+                
+            -   
+                Name: Route 35 MysteryBerry
+                FileName: Route35.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 35
+                FlagReqs:
+                    -   Fog Badge
+                    -   Berry Trees
+                ItemReqs:
+                    -   Surf
+                FlagsSet:
+                ReachableReqs:
+                Text:
+                TrainerList:
+                NormalItem: MYSTERYBERRY
+                IsBerry: Yes
+                BerryFlag: 287
+                Code: |
+                  Route35FruitTree:
+                      ITEMLINE

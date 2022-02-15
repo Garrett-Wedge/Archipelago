@@ -1,0 +1,40 @@
+Location:
+    -
+        Name: Cinnabar Island
+        FileName: CinnabarIsland.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: CINNABAR_ISLAND
+        LocationReqs:
+            - Route 21
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+            - Bothered Blue
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: Cinnabar
+        Sublocations:
+            -
+                Name: Cinnabar Island Hidden Rare Candy
+                FileName: CinnabarIsland.asm
+                SecondaryFile: CinnabarIsland.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Cinnabar Island
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: RARE_CANDY
+                Code: |
+                    CinnabarIslandHiddenRareCandy:
+                        ITEMLINE
+                SecondaryCode: '    bg_event  9,  1, BGEVENT_ITEM, CinnabarIslandHiddenRareCandy'
+                Text:
+                TrainerList: 
+                Sublocations:

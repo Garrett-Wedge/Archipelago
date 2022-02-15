@@ -1,0 +1,44 @@
+Location:
+    -
+        Name: Route 1
+        FileName: Route1.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+            - ROUTE_1
+        LocationReqs:
+            - Viridian City
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 32
+        TrainerList: 
+            - SCHOOLBOY 5
+            - COOLTRAINERF 14
+        Sublocations:
+        
+            -
+                Name: Route 1 Bitter Berry
+                FileName: Route1.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 1
+                FlagReqs:
+                    - Berry Trees
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Text:
+                TrainerList:
+                NormalItem: BITTER_BERRY
+                IsBerry: Yes
+                BerryFlag: 278
+                Code: |
+                  Route1FruitTree:
+                      ITEMLINE
+        
+        

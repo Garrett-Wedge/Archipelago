@@ -1,0 +1,37 @@
+Name: Easy Logic
+Description: All items (item balls, gift items, TMs, HMs, key items, etc...) in the game have their locations randomly shuffled. All badges in the game are also shuffled as well. All items which require daily events, day-night events or happiness checks are NOT included under these settings. Various settings are in place to makes things easier for new players. Hints are provided to help you out, these are located on signs throughout the game.
+BasePatch: Patches/BaseModificationsSpeedchoice.json
+RegularWildLevelScalingDefault: False
+SpecialWildLevelScalingDefault: False
+TrainerLevelScalingDefault: False
+DefaultModifiers:
+    - Modifiers/NoBacktrackingEarlyBikeAndFly.yml
+    - Modifiers/NoEarlyRBYKantoGymLeaders.yml
+    - Modifiers/DefinitelyNoEarlySabrina.yml
+    - Modifiers/NoEarlyBasement.yml
+    - Modifiers/SkipReturningToNewBark.yml
+    - Modifiers/SkipE4AndFightRed.yml
+    - Modifiers/SemiProgressiveRods.yml
+    - Modifiers/RemoveCutTreeInIlex.yml
+    - Modifiers/RegularSnorlaxRoute.yml
+    - Modifiers/BanMildlyInconvenientLocations.yml
+    - Modifiers/NoVanillaBasement.yml
+    - Modifiers/NoWhirlIslands.yml
+    - Modifiers/NoRuinsOfAlph.yml
+    - Modifiers/NoDoubleDippingKenya.yaml
+    - Modifiers/NoDoubleDippingLighthouse.yaml
+    - Modifiers/NoDoubleDippingPowerPlant.yaml
+    - Modifiers/NoDoubleDippingRadioTower.yaml
+    - Modifiers/NoDoubleDippingRoute2.yaml
+    - Modifiers/NoDoubleDippingRoute25.yaml
+    - Modifiers/NoDoubleDippingRoute44.yaml
+    - Modifiers/UpgradeHealingItems.yml
+    - Modifiers/UpgradeValuableItems.yml
+    - Modifiers/UpgradeBalls.yml
+HintLevel: 5
+nHints: 75
+BannedLocations:
+AllowedLocations:
+Goal: Red
+FlagsSet:
+    - Kanto Mode

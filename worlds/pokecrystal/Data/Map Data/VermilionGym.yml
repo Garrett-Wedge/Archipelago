@@ -1,0 +1,86 @@
+Location:
+    -
+        Name: Vermilion Gym via Surf
+        FileName: VermilionGym.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Vermilion City
+        FlagReqs:
+            - Fog Badge
+        ItemReqs:
+            - Surf
+        FlagsSet:
+        ReachableReqs:
+        Code: 
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Vermilion Gym via Cut
+        FileName: VermilionGym.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Vermilion City
+        FlagReqs:
+            - Hive Badge
+        ItemReqs:
+            - Cut
+        FlagsSet:
+        ReachableReqs:
+        Code: 
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Vermilion City to Gym
+        FileName: VermilionGym.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Vermilion Gym via Surf
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code: 
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Vermilion City to Gym
+        FileName: VermilionGym.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Vermilion Gym via Cut
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code: 
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Vermilion Gym
+        FileName: VermilionGym.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList:
+        LocationReqs: Vermilion City to Gym
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 32
+        TrainerList:
+            - JUGGLER 3
+            - GUITARIST 2
+            - GENTLEMAN 3
+            - LT_SURGE 1
+        HintName: Vermillion
+        Sublocations:

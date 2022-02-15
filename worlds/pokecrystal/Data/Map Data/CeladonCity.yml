@@ -1,0 +1,86 @@
+Location:
+    -
+        Name: Celadon City
+        FileName: CeladonCity.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: CELADON_CITY
+        LocationReqs:
+            - Route 7
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        HintName: Celadon
+        TrainerList: 
+        Sublocations:
+            -
+                Name: Celadon City Hidden PP Up
+                FileName: CeladonCity.asm
+                SecondaryFile: CeladonCity.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Celadon City
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: PP_UP
+                Code: |
+                    CeladonCityHiddenPpUp:
+                        ITEMLINE
+                SecondaryCode: '    bg_event 37, 21, BGEVENT_ITEM, CeladonCityHiddenPpUp'
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Celadon Mansion Curse
+                FileName: CeladonMansionRoofHouse.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Celadon City
+                FlagReqs:
+                    - Timed Events
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Text:
+                TrainerList:
+                NormalItem: TM_CURSE
+                Code: |
+                    .Night:
+                        writetext CeladonMansionRoofHousePharmacistStoryText
+                        promptbutton
+                        ITEMLINE
+                        iffalse .NoRoom
+                        setevent EVENT_GOT_TM03_CURSE
+            -
+                Name: Celadon Cafe Leftovers
+                FileName: CeladonCafe.asm
+                SecondaryFile: CeladonCafe.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Celadon City
+                FlagReqs:
+                    - NPC Trash Can
+                    - Impossible
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Text:
+                TrainerList:
+                NormalItem: LEFTOVERS
+                IsSpecial: Yes
+                Code: |
+                    CeladonCafeTrashcan:
+                        ITEMLINE
+                SecondaryCode: '    bg_event  7,  1, BGEVENT_ITEM, CeladonCafeTrashcan'
+                Text:
+                TrainerList: 
+                Sublocations:

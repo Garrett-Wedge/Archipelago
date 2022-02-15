@@ -1,0 +1,17 @@
+Location:
+    -
+        Name: Pallet Town
+        FileName: PalletTown.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: PALLET_TOWN
+        LocationReqs:
+            - Route 1
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:

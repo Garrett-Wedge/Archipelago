@@ -1,0 +1,77 @@
+Name: Easy KIR
+Description: All HMs and Key Items are randomized. All badges are also shuffled. The easiest possible item randomizer setting. Recommended for new players that are nervous about randomizing the entire item pool. Hints are provided to help you out, these are located on signs throughout the game.
+BasePatch: Patches/BaseModificationsSpeedchoice.json
+RegularWildLevelScalingDefault: False
+SpecialWildLevelScalingDefault: False
+TrainerLevelScalingDefault: False
+DefaultModifiers:
+    - Modifiers/NoBacktrackingEarlyBikeAndFly.yml
+    - Modifiers/NoEarlyRBYKantoGymLeaders.yml
+    - Modifiers/DefinitelyNoEarlySabrina.yml
+    - Modifiers/SkipReturningToNewBark.yml
+    - Modifiers/ProgressiveRods.yml
+    - Modifiers/RemoveCutTreeInIlex.yml
+    - Modifiers/RegularSnorlaxRoute.yml
+    - Modifiers/BanMildlyInconvenientLocations.yml
+    - Modifiers/NoVanillaBasement.yml
+ProgressItems:
+    - Surf
+    - Squirtbottle
+    - Flash
+    - Cut
+    - Strength
+    - Secret Potion
+    - Card Key
+    - Basement Key
+    - Waterfall
+    - Bicycle
+    - Fly
+    - S S Ticket
+    - Machine Part
+    - Lost Item
+    - Pass
+TrashItemList:
+    - Mystery Egg
+    - OLD_ROD
+    - BLUE_CARD
+    - COIN_CASE
+    - ITEMFINDER
+    - GOOD_ROD
+    - Red Scale
+    - Whirlpool
+    - Clear Bell
+    - SUPER_ROD
+    - SILVER_WING
+BannedLocations:
+AllowedLocations:
+    - Mr. Pokemon's Egg
+    - Sprout Tower Flash HM
+    - Old Rod Guru
+    - Ilex Cut HM
+    - Bike Shop
+    - Coin Case Underground
+    - Buena Item
+    - Flower Shop
+    - Dance Theatre Surf HM
+    - Itemfinder House
+    - Good Rod Guru
+    - Olivine Strength HM
+    - Secret Potion Man
+    - Cianwood Fly HM
+    - Red Scale Dropped
+    - Rocket Base Whirlpool HM
+    - Radio Tower Rockets Part 1
+    - Goldenrod Tunnel Rocket Attack
+    - Radio Tower Rockets Part 2
+    - Ice Path Waterfall HM
+    - Elm SS Ticket
+    - Vermilion City Lost Item
+    - Copycat Rail Pass
+    - Hidden Machine Part
+    - Super Rod Guru
+    - Silver Wing Old Man
+Goal: Red
+HintLevel: 5
+nHints: 75
+FlagsSet:
+    - Kanto Mode

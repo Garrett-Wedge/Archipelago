@@ -1,0 +1,254 @@
+Location:
+    -
+        Name: Ice Path Part 1
+        FileName: IcePathB1F.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList:
+            - Ice_Path_1F
+            - Ice_Path_B1F
+            - Ice_Path_B2F_Blackthorn_Side
+            - Ice_Path_B2F_Mahogany_Side
+            - Ice_Path_B3F
+        LocationReqs: Route 44
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: Ice Path
+        Sublocations:
+            -
+                Name: Ice Path Waterfall HM
+                FileName: IcePath1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Ice Path Part 1
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                IsBall: Yes
+                Code: |
+                    IcePath1FHMWaterfall:
+                        ITEMLINE
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Ice Path Max Potion
+                FileName: IcePathB2FMahoganySide.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Ice Path Part 1
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                IsBall: Yes
+                NormalItem: MAX_POTION
+                Code: |
+                    IcePathB2FMahoganySideMaxPotion:
+                        ITEMLINE
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Ice Path Hidden Carbos
+                FileName: IcePathB2FMahoganySide.asm
+                SecondaryFile: IcePathB2FMahoganySide.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Ice Path Part 1
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: CARBOS
+                Code: |
+                    IcePathB2FMahoganySideHiddenCarbos:
+                        ITEMLINE
+                SecondaryCode: '    bg_event  0, 17, BGEVENT_ITEM, IcePathB2FMahoganySideHiddenCarbos'
+                Text:
+                TrainerList: 
+                Sublocations:
+    -
+        Name: Ice Path Part 2
+        FileName: IcePathB1F.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Ice Path Part 1
+        FlagReqs:
+            - Plain Badge
+        ItemReqs:
+            - Strength
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: Ice Path
+        Sublocations:
+            -
+                Name: Ice Path Full Heal
+                FileName: IcePathB2FMahoganySide.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Ice Path Part 2
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                IsBall: Yes
+                NormalItem: FULL_HEAL
+                Code: |
+                    IcePathB2FMahoganySideFullHeal:
+                        ITEMLINE
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Ice Path Nevermeltice
+                FileName: IcePathB3F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Ice Path Part 2
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                IsBall: Yes
+                NormalItem: NEVERMELTICE
+                Code: |
+                    IcePathB3FNevermeltice:
+                        ITEMLINE
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Ice Path Rest TM
+                FileName: IcePathB2FBlackthornSide.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Ice Path Part 2
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                IsBall: Yes
+                NormalItem: TM_REST
+                Code: |
+                    IcePathB2FBlackthornSideTMRest:
+                        ITEMLINE
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Ice Path Iron
+                FileName: IcePathB1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Ice Path Part 2
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                IsBall: Yes
+                NormalItem: IRON
+                Code: |
+                    IcePathB1FIron:
+                        ITEMLINE
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Ice Path PP Up
+                FileName: IcePath1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Ice Path Part 2
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                IsBall: Yes
+                NormalItem: PP_UP
+                Code: |
+                    IcePath1FPPUp:
+                        ITEMLINE
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Ice Path Protein
+                FileName: IcePath1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Ice Path Part 2
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                IsBall: Yes
+                NormalItem: PROTEIN
+                Code: |
+                    IcePath1FProtein:
+                        ITEMLINE
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Ice Path Hidden Max Potion
+                FileName: IcePathB1F.asm
+                SecondaryFile: IcePathB1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Ice Path Part 2
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: MAX_POTION
+                Code: |
+                    IcePathB1FHiddenMaxPotion:
+                        ITEMLINE
+                SecondaryCode: '    bg_event 17, 30, BGEVENT_ITEM, IcePathB1FHiddenMaxPotion'
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Ice Path Hidden Ice Heal
+                FileName: IcePathB2FBlackthornSide.asm
+                SecondaryFile: IcePathB2FBlackthornSide.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Ice Path Part 2
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: ICE_HEAL
+                Code: |
+                    IcePathB2FBlackthornSideHiddenIceHeal:
+                        ITEMLINE
+                SecondaryCode: '    bg_event  2, 10, BGEVENT_ITEM, IcePathB2FBlackthornSideHiddenIceHeal'
+                Text:
+                TrainerList: 
+                Sublocations:

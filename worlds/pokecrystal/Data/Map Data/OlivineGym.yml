@@ -1,0 +1,71 @@
+Location:
+    -
+        Name: Olivine Gym
+        FileName: OlivineGym.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs: Lighthouse Amphy
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: Olivine
+        Sublocations:
+            -
+                Name: Jasmine TM
+                FileName: OlivineGym.asm
+                Type: Item
+                HasPKMN: Yes
+                WildTableList: 
+                LocationReqs: Olivine Gym
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Tags:
+                    -
+                        Name: Leader
+                        SubTags:
+                            - Olivine
+                NormalItem: TM_IRON_TAIL
+                Code: |
+                    .FightDone:
+                        checkevent EVENT_GOT_TM23_IRON_TAIL
+                        iftrue .GotIronTail
+                        writetext Jasmine_BadgeSpeech
+                        promptbutton
+                        ITEMLINE
+                        iffalse .NoRoomForIronTail
+                        setevent EVENT_GOT_TM23_IRON_TAIL
+                        writetext Jasmine_IronTailSpeech
+                        waitbutton
+                        closetext
+                        end
+                Text: |
+                    Jasmine_IronTailSpeech:
+                        text "…You could use"
+                        line "that TM to teach"
+                        cont "ITEMNAME."
+                        done
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Olivine Gym Trainers
+                FileName: OlivineGym.asm
+                Type: Map
+                HasPKMN: Yes
+                WildTableList: 
+                LocationReqs: Olivine Gym
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Code:
+                Text:
+                AREALV: 20
+                TrainerList: 
+                        - JASMINE 1

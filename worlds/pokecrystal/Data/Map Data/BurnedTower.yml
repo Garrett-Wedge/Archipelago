@@ -1,0 +1,122 @@
+Location:  
+    -
+        Name: Burned Tower
+        FileName: BurnedTower1F.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: BURNED_TOWER_1F
+        LocationReqs: Ecruteak City
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 13
+        TrainerList:
+            - RIVAL1 7
+            - RIVAL1 8
+            - RIVAL1 9
+        Sublocations:
+            -
+                Name: Burned Tower Rock Smash Item
+                FileName: BurnedTower1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Ecruteak City
+                FlagReqs:
+                ItemReqs: 
+                    - Rock Smash
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: HP_UP
+                IsBall: Yes
+                Code: |
+                    BurnedTower1FHPUp:
+                        ITEMLINE
+                Text:
+                AREALV:
+                TrainerList:
+                Sublocations:
+            -
+                Name: Burned Tower Hidden Ether
+                FileName: BurnedTower1F.asm
+                SecondaryFile: BurnedTower1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Ecruteak City
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs: 
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: ETHER
+                Code: |
+                    BurnedTower1FHiddenEther:
+                        ITEMLINE
+                SecondaryCode: '    bg_event  8,  7, BGEVENT_ITEM, BurnedTower1FHiddenEther'
+                Text:
+                AREALV:
+                TrainerList:
+                Sublocations:
+            -
+                Name: Burned Tower Hidden Ultra Ball
+                FileName: BurnedTower1F.asm
+                SecondaryFile: BurnedTower1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Ecruteak City
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs: 
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: ULTRA_BALL
+                Code: |
+                    BurnedTower1FHiddenUltraBall:
+                        ITEMLINE
+                SecondaryCode: '    bg_event 13, 11, BGEVENT_ITEM, BurnedTower1FHiddenUltraBall'
+                Text:
+                AREALV:
+                TrainerList:
+                Sublocations:
+    -
+        Name: Burned Tower Basement
+        FileName: BurnedTowerB1F.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: BURNED_TOWER_B1F
+        LocationReqs: Ecruteak City
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: Burned Tower
+        Sublocations:
+            -
+                Name: Burned Tower Strength Item
+                FileName: BurnedTowerB1F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Ecruteak City
+                FlagReqs: 
+                    - Plain Badge
+                ItemReqs:
+                    - Strength
+                NormalItem: TM_ENDURE
+                IsBall: Yes
+                FlagsSet:
+                ReachableReqs:
+                Code: |
+                    BurnedTowerB1FTMEndure:
+                        ITEMLINE
+                Text:
+                TrainerList:
+                Sublocations:

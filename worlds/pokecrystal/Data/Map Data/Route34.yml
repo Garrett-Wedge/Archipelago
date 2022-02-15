@@ -1,0 +1,222 @@
+Location:
+    -
+        Name: Route 34 Entrance
+        FileName: Route34.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs: Route 34 via Ilex
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 34 via Ilex
+        FileName: Route34.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+        LocationReqs: Ilex Forest Back Entrance
+        FlagReqs:
+            - Hive Badge
+        ItemReqs:
+            - Cut
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 34 Entrance
+        FileName: Route34.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs: Route 34 via Goldenrod
+        FlagReqs:
+        ItemReqs:
+            - Squirtbottle
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 34 via Goldenrod
+        FileName: Route34.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+        LocationReqs: Goldenrod City via Route 35
+        FlagReqs:
+        ItemReqs:
+            - Squirtbottle
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations: 
+    -
+        Name: Route 34 
+        FileName: Route34.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: ROUTE_34
+        LocationReqs: Route 34 Entrance
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 10
+        TrainerList: 
+            - YOUNGSTER 5
+            - POKEFANM 7
+            - PICNICKER 2
+            - YOUNGSTER 6
+            - OFFICER 1
+            - CAMPER 2
+        Sublocations:
+            -
+                Name: Soft Sand Girls
+                FileName: Route34.asm
+                Type: Item
+                HasPKMN: Yes
+                WildTableList: 
+                LocationReqs: Route 34
+                FlagReqs:
+                    - Fog Badge
+                ItemReqs:
+                    - Surf
+                FlagsSet:
+                ReachableReqs:
+                Tags:
+                    - Name: Annoying
+                      SubTags:
+                NormalItem: SOFT_SAND
+                Code: |
+                    .Script:
+                        endifjustbattled
+                        opentext
+                        checkevent EVENT_GOT_SOFT_SAND_FROM_KATE
+                        iftrue .GotSoftSand
+                        writetext CooltrainerfKateOfferSoftSandText
+                        promptbutton
+                        ITEMLINE
+                        iffalse .BagFull
+                        setevent EVENT_GOT_SOFT_SAND_FROM_KATE
+                    .GotSoftSand:
+                        writetext CooltrainerfKateAfterText
+                        waitbutton
+                    .BagFull:
+                        closetext
+                        end
+                Text:
+                AREALV: 15
+                TrainerList: 
+                    - COOLTRAINERF 5
+                    - COOLTRAINERF 6
+                    - COOLTRAINERF 17
+                Sublocations:
+            -
+                Name: Route 34 Nugget
+                FileName: Route34.asm
+                Type: Item
+                HasPKMN: Yes
+                WildTableList: 
+                LocationReqs: Route 34
+                FlagReqs:
+                    - Fog Badge
+                ItemReqs:
+                    - Surf
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: NUGGET
+                IsBall: Yes
+                Code: |
+                    Route34Nugget:
+                        ITEMLINE
+                Text:
+                AREALV:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Route 34 Hidden Rare Candy
+                FileName: Route34.asm
+                SecondaryFile: Route34.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 34
+                FlagReqs:
+                    - Hidden Items
+                    - Fog Badge
+                ItemReqs:
+                    - Surf
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: RARE_CANDY
+                Code: |
+                    Route34HiddenRareCandy:
+                        ITEMLINE
+                SecondaryCode: '    bg_event  8, 32, BGEVENT_ITEM, Route34HiddenRareCandy'
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Route 34 Hidden Super Potion
+                FileName: Route34.asm
+                SecondaryFile: Route34.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 34
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: SUPER_POTION
+                Code: |
+                    Route34HiddenSuperPotion:
+                        ITEMLINE
+                SecondaryCode: '    bg_event 17, 19, BGEVENT_ITEM, Route34HiddenSuperPotion'
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Route 34 Picknicker Gina Leaf Stone
+                FileName: Route34.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: 
+                    - Route 34
+                    - Radio Tower Rockets Part 2
+                FlagReqs:
+                    - Phone Call Trainers
+                ItemReqs:
+                    - Pokegear
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: LEAF_STONE
+                IsBall: No
+                Code: |
+                    .LeafStone:
+                        scall .Gift
+                        ITEMLINE
+                        iffalse .BagFull
+                        clearflag ENGINE_GINA_HAS_LEAF_STONE
+                        setevent EVENT_GINA_GAVE_LEAF_STONE
+                        sjump .NumberAccepted
+                Text:
+                TrainerList: 
+                Sublocations:

@@ -1,0 +1,188 @@
+Location:
+    -
+        Name: Route 45
+        FileName: Route45.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: Route_45
+        LocationReqs: Blackthorn City
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 23
+        TrainerList: 
+            - HIKER 7
+            - HIKER 8
+            - HIKER 10
+            - HIKER 20
+            - CAMPER 22
+            - BLACKBELT_T 8
+            - COOLTRAINERM 8
+            - COOLTRAINERF 7
+        Sublocations:
+    -
+        Name: Route 45 Nugget
+        FileName: Route45.asm
+        Type: Item
+        HasPKMN: Yes
+        WildTableList:
+        LocationReqs: Route 45
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        IsBall: Yes
+        NormalItem: NUGGET
+        Code: |
+            Route45Nugget:
+                ITEMLINE
+        Text:
+        TrainerList:
+        HintName: Route 45
+        Sublocations:
+    -
+        Name: Route 45 Revive
+        FileName: Route45.asm
+        Type: Item
+        HasPKMN: Yes
+        WildTableList:
+        LocationReqs: Route 45
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        IsBall: Yes
+        NormalItem: REVIVE
+        HintName: Route 45
+        Code: |
+            Route45Revive:
+                ITEMLINE
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 45 Max Potion
+        FileName: Route45.asm
+        Type: Item
+        HasPKMN: Yes
+        WildTableList:
+        LocationReqs: Route 45
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        HintName: Route 45
+        ReachableReqs:
+        IsBall: Yes
+        NormalItem: MAX_POTION
+        Code: |
+            Route45MaxPotion:
+                ITEMLINE
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 45 Elixer
+        FileName: Route45.asm
+        Type: Item
+        HasPKMN: Yes
+        WildTableList:
+        LocationReqs: Route 45
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        HintName: Route 45
+        IsBall: Yes
+        NormalItem: ELIXER
+        Code: |
+            Route45Elixer:
+                ITEMLINE
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 45 Hidden PP Up
+        FileName: Route45.asm
+        SecondaryFile: Route45.asm
+        Type: Item
+        HasPKMN: No
+        WildTableList:
+        HintName: Route 45
+        LocationReqs: Route 45
+        FlagReqs:
+            - Hidden Items
+            - Fog Badge
+        ItemReqs:
+            - Surf
+        FlagsSet:
+        ReachableReqs:
+        NormalItem: PP_UP
+        Code: |
+            Route45HiddenPpUp:
+                ITEMLINE
+        SecondaryCode: '    bg_event 13, 80, BGEVENT_ITEM, Route45HiddenPpUp'
+        Text:
+        TrainerList: 
+        Sublocations:
+        
+    -   
+        Name: Route 45 MysteryBerry
+        FileName: Route45.asm
+        Type: Item
+        HintName: Route 45
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Route 45
+        FlagReqs:
+            - Berry Trees
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Text:
+        TrainerList:
+        NormalItem: MYSTERYBERRY
+        IsBerry: Yes
+        BerryFlag: 293
+        Code: |
+          Route45FruitTree:
+              ITEMLINE
+    -
+        Name: Route 45 Kenji
+        FileName: Route45.asm
+        Type: Item
+        HasPKMN: Yes
+        WildTableList:
+        LocationReqs: 
+            - Route 45
+        FlagReqs:
+            - Phone Call Trainers
+        ItemReqs:
+            - Pokegear
+        FlagsSet:
+        ReachableReqs:
+        IsBall: No
+        NormalItem: PP_UP
+        Code: |
+            .Registered:
+                readvar VAR_KENJI_BREAK
+            .ckir_BEFORE_Kenji::
+                ifnotequal 1, .ckir_AFTER_Kenji
+                checktime MORN
+                iftrue .ckir_AFTER_Kenji
+                checktime NITE
+                iftrue .ckir_AFTER_Kenji
+                checkevent EVENT_KENJI_ON_BREAK
+                iffalse .ckir_AFTER_Kenji
+                scall Route45GiftM
+            .ckir_AFTER_Kenji::
+                ITEMLINE
+                iffalse .NoRoom
+                clearevent EVENT_KENJI_ON_BREAK
+                special SampleKenjiBreakCountdown
+                sjump Route45NumberAcceptedM
+        Text:
+        TrainerList: 
+        Sublocations:

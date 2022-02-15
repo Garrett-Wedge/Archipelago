@@ -1,0 +1,67 @@
+Location:
+    -
+        Name: Fuchsia City Gym Badge
+        FileName: FuchsiaGym.asm
+        LocationReqs: Fuchsia Gym
+        HasPKMN: No
+        Type: Gym
+        WildTableList:
+        FlagReqs:
+            - Kanto Mode
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        ItemUnlock:
+        InfeasibleBadges:
+        NormalBadge: Soul Badge
+        HintName: Fuschia
+        Tags:
+           -
+                Name: Leader
+                SubTags:
+                    - Fuschia
+        BadgeLine: |
+            FuchsiaGymJanineScript:
+                checkevent EVENT_BEAT_JANINE
+                iftrue .FightDone
+                applymovement FUCHSIAGYM_JANINE, Movement_NinjaSpin
+                faceplayer
+                opentext
+                writetext JanineText_DisappointYou
+                waitbutton
+                closetext
+                winlosstext JanineText_ToughOne, 0
+                loadtrainer JANINE, JANINE1
+                startbattle
+                reloadmapafterbattle
+                setevent EVENT_BEAT_JANINE
+                setevent EVENT_BEAT_LASS_ALICE
+                setevent EVENT_BEAT_LASS_LINDA
+                setevent EVENT_BEAT_PICNICKER_CINDY
+                setevent EVENT_BEAT_CAMPER_BARRY
+                variablesprite SPRITE_FUCHSIA_GYM_1, SPRITE_LASS
+                variablesprite SPRITE_FUCHSIA_GYM_2, SPRITE_LASS
+                variablesprite SPRITE_FUCHSIA_GYM_3, SPRITE_LASS
+                variablesprite SPRITE_FUCHSIA_GYM_4, SPRITE_YOUNGSTER
+                special LoadUsedSpritesGFX
+                opentext
+                BADGELINE
+                sjump .AfterBattle
+        Code:
+        Text:
+            -
+                File: FuchsiaGym.asm
+                Text: |
+                    UnknownText_0x195fa1:
+                        text "JANINE: You're a"
+                        line "tough one. You"
+                        cont "definitely won…"
+
+                        para "Here's BADGENAME."
+                        line "Take it."
+                        done
+
+                    UnknownText_0x195feb:
+                        text "<PLAYER> received"
+                        line "BADGENAME."
+                        done

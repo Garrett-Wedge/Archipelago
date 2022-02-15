@@ -1,0 +1,219 @@
+Location:
+    -
+        Name: Elm's Lab
+        FileName: ElmsLab.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+            - NEW_BARK_TOWN
+        LocationReqs:
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: New Bark
+        Sublocations:
+            -
+                Name: Elm Aide Potion
+                FileName: ElmsLab.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Elm's Lab
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Text:
+                TrainerList: 
+                NormalItem: POTION
+                Code: |
+                    AideScript_GivePotion:
+                        opentext
+                        writetext AideText_GiveYouPotion
+                        promptbutton
+                        ITEMLINE
+                        writetext AideText_AlwaysBusy
+                        waitbutton
+                        closetext
+                        setscene SCENE_ELMSLAB_NOTHING
+                        end
+            -
+                Name: Elm's Theft Occurs
+                FileName: ElmsLab.asm
+                Type: Map
+                HasPKMN: No
+                WildTableList:
+                LocationReqs:
+                FlagReqs:
+                    - Mr. Pokemon Visited
+                ItemReqs:
+                    - Mystery Egg
+                FlagsSet:
+                    - Gave Elm Egg
+                ReachableReqs:
+                Code:
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Elm Aide Pokeballs
+                FileName: ElmsLab.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs:
+                FlagReqs:
+                ItemReqs:
+                    - Mystery Egg
+                FlagsSet:
+                    - Gave Elm Egg
+                ReachableReqs:
+                IsSpecial: Yes
+                NormalItem: POKE_BALL
+                Code: |
+                    AideScript_GiveYouBalls:
+                        opentext
+                        writetext AideText_GiveYouBalls
+                        promptbutton
+                        getitemname STRING_BUFFER_4, POKE_BALL
+                        scall AideScript_ReceiveTheBalls
+                        giveitem ITEMLINE, 5
+                        writetext AideText_ExplainBalls
+                        promptbutton
+                        itemnotify
+                        closetext
+                        setscene SCENE_ELMSLAB_NOTHING
+                        end
+                Text: |
+                    AideText_ExplainBalls:
+                        text "To add to your"
+                        line "#DEX, you have"
+                        cont "to catch #MON."
+
+                        para "Throw ITEMNAMES"
+                        line "at wild #MON"
+                        cont "to get them."
+                        done
+                TrainerList: 
+                Sublocations:
+            -             
+                Name: Elm Master Ball
+                FileName: ElmsLab.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Elm's Lab
+                FlagReqs: 
+                    - Rising Badge
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: MASTER_BALL
+                Text: |
+                    ElmGiveMasterBallText2:
+                        text "The ITEMNAME is"
+                        line "the best!"
+
+                        para "It's the ultimate"
+                        line "BALL! It'll catch"
+
+                        para "any #MON with-"
+                        line "out fail."
+
+                        para "It's given only to"
+                        line "recognized #MON"
+                        cont "researchers."
+
+                        para "I think you can"
+                        line "make much better"
+
+                        para "use of it than I"
+                        line "can, <PLAY_G>!"
+                        done
+                TrainerList: 
+                Code: |
+                    ElmGiveMasterBallScript:
+                        writetext ElmGiveMasterBallText1
+                        promptbutton
+                        ITEMLINE
+                        iffalse .notdone
+                        setevent EVENT_GOT_MASTER_BALL_FROM_ELM
+                        writetext ElmGiveMasterBallText2
+                        waitbutton
+                    .notdone
+                        closetext
+                        end
+            -             
+                Name: Elm SS Ticket
+                FileName: ElmsLab.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Elm's Lab
+                FlagReqs: 
+                    - Became Champion
+                ItemReqs:
+                FlagsSet: 
+                ReachableReqs:
+                Tags:
+                    -
+                        Name: Annoying
+                        SubTags:
+                Text: |
+                    ElmGiveTicketText1:
+                        text "ELM: <PLAY_G>!"
+                        line "There you are!"
+
+                        para "I called because I"
+                        line "have something for"
+                        cont "you."
+
+                        para "See? It's an"
+                        line "ITEMNAME."
+
+                        para "Now you can catch"
+                        line "#MON in KANTO."
+                        done
+                TrainerList: 
+                Code: |
+                    ElmGiveTicketScript:
+                        writetext ElmGiveTicketText1
+                        promptbutton
+                        ITEMLINE
+                        setevent EVENT_GOT_SS_TICKET_FROM_ELM
+                        writetext ElmGiveTicketText2
+                        waitbutton
+                        closetext
+                        end
+            -             
+                Name: Elm Everstone
+                FileName: ElmsLab.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Elm's Lab
+                FlagReqs:
+                    - Most Map Access
+                    - Mon Locked Checks
+                ItemReqs:
+                FlagsSet:
+                MonReq: Togepi
+                ReachableReqs:
+                Text:
+                NormalItem: EVERSTONE
+                TrainerList: 
+                Code: |
+                    ElmGiveEverstoneScript:
+                        writetext ElmGiveEverstoneText1
+                        promptbutton
+                        ITEMLINE
+                        iffalse ElmScript_NoRoomForEverstone
+                        writetext ElmGiveEverstoneText2
+                        waitbutton
+                        closetext
+                        setevent EVENT_GOT_EVERSTONE_FROM_ELM
+                        end

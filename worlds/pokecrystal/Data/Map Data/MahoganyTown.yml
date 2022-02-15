@@ -1,0 +1,17 @@
+Location:
+    -
+        Name: Mahogany Town
+        FileName: MahoganyTown.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Route 42 Mahogany Side
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: Mahogany
+        Sublocations:

@@ -1,0 +1,55 @@
+Location:
+    -
+        Name: Route 33
+        FileName: Route33.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs: Union Cave
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+    -
+        Name: Route 33 Actual
+        FileName: Route33.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: ROUTE_33
+        LocationReqs: Route 33
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 7
+        HintName: Route 33
+        TrainerList: 
+            - HIKER 5
+        Sublocations:
+        
+        -   
+            Name: Route 33 PSNCureBerry
+            FileName: Route33.asm
+            Type: Item
+            HasPKMN: No
+            WildTableList:
+            LocationReqs: Route 33 Actual
+            FlagReqs:
+                - Berry Trees
+            ItemReqs:
+            FlagsSet:
+            ReachableReqs:
+            Text:
+            TrainerList:
+            NormalItem: PSNCUREBERRY
+            IsBerry: Yes
+            BerryFlag: 286
+            Code: |
+              Route33FruitTree:
+                  ITEMLINE

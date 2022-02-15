@@ -1,0 +1,177 @@
+Location:
+    -
+            Name: Route 46
+            FileName: Route46.asm
+            Type: Map
+            HasPKMN: No
+            WildTableList: ROUTE_46
+            LocationReqs: Route 29
+            FlagReqs:
+            ItemReqs:
+            FlagsSet:
+            ReachableReqs:
+            Code:
+            Text:
+            TrainerList: 
+            Sublocations:
+    -
+            Name: Route 46 Upper
+            FileName: Route46.asm
+            Type: Map
+            HasPKMN: No
+            WildTableList:
+            LocationReqs: Route 45
+            FlagReqs:
+            ItemReqs:
+            FlagsSet:
+            ReachableReqs:
+            Code:
+            Text:
+            TrainerList: 
+            Sublocations:
+    -
+            Name: Route 46 Upper via Violet
+            FileName: Route46.asm
+            Type: Map
+            HasPKMN: No
+            WildTableList:
+            LocationReqs: Dark Cave Violet
+            FlagReqs:
+                - Zephyr Badge
+            ItemReqs:
+                - Flash
+                - Rock Smash
+            FlagsSet:
+            ReachableReqs:
+            Code:
+            Text:
+            TrainerList: 
+            Sublocations:
+    -
+            Name: Route 46 Upper
+            FileName: Route46.asm
+            Type: Map
+            HasPKMN: No
+            WildTableList:
+            LocationReqs: Route 46 Upper via Violet
+            FlagReqs:
+            ItemReqs:
+            FlagsSet:
+            ReachableReqs:
+            Code:
+            Text:
+            TrainerList: 
+            Sublocations:
+    -
+            Name: Route 46 X Speed
+            FileName: Route46.asm
+            Type: Item
+            HasPKMN: Yes
+            WildTableList: 
+            LocationReqs: 
+                - Route 46 Upper
+            FlagReqs:
+            ItemReqs:
+            FlagsSet:
+            ReachableReqs:
+            NormalItem: X_SPEED
+            IsBall: Yes
+            Code: |
+                Route46XSpeed:
+                    ITEMLINE
+            Text:
+            AREALV: 13
+            TrainerList:
+                - CAMPER 11
+                - PICNICKER 10
+                - HIKER 11                                
+            Sublocations:
+            HintName: Route 46
+            
+    -   
+        Name: Route 46 PRZcureBerry
+        FileName: Route46.asm
+        Type: Item
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Route 46 Upper
+        FlagReqs:
+            -   Berry Trees
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Text:
+        TrainerList:
+        NormalItem: PRZCUREBERRY
+        IsBerry: Yes
+        BerryFlag: 294
+        HintName: Route 46
+        Code: |
+            Route46FruitTree1:
+                ITEMLINE
+    -   
+        Name: Route 46 Berry
+        FileName: Route46.asm
+        Type: Item
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Route 46 Upper
+        FlagReqs:
+            -   Berry Trees
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Text:
+        TrainerList:
+        NormalItem: BERRY
+        IsBerry: Yes
+        BerryFlag: 295
+        HintName: Route 46
+        Code: |
+            Route46FruitTree2:
+                ITEMLINE
+    -   
+        Name: Route 46 Picknicker Erin
+        FileName: Route46.asm
+        SecondaryFile: Route46.asm
+        Type: Item
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: 
+            - Route 46 Upper
+            - Elite Four
+            - Power Plant Activated
+        FlagReqs:
+            - Phone Call Trainers
+        ItemReqs:
+            - Pokegear
+        FlagsSet:
+        ReachableReqs:
+        Text:
+        TrainerList:
+        NormalItem: CALCIUM
+        Code: |
+            .HasCalcium:
+                opentext
+                writetext PicnickerErin2BeatenText
+                waitbutton
+                ITEMLINE
+                iffalse ErinNoRoomForCalcium
+                clearevent EVENT_ERIN_CALCIUM
+                setevent EVENT_GOT_CALCIUM_FROM_ERIN
+                sjump Route46NumberAcceptedF
+        SecondaryCode: |
+            .LoadFight2:
+                loadtrainer PICNICKER, ERIN3
+                startbattle
+                reloadmapafterbattle
+                clearflag ENGINE_ERIN
+                checkevent EVENT_ERIN_CALCIUM
+                iftrue .HasCalcium
+                checkevent EVENT_GOT_CALCIUM_FROM_ERIN
+                iftrue .GotCalciumAlready
+                scall Route46RematchGiftF
+                ITEMLINE
+                iffalse ErinNoRoomForCalcium
+                setevent EVENT_GOT_CALCIUM_FROM_ERIN
+                sjump Route46NumberAcceptedF

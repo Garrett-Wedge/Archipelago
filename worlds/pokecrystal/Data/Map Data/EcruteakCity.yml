@@ -1,0 +1,206 @@
+Location:
+    -
+        Name: Ecruteak City Entrance
+        FileName: EcruteakCity.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs: Ecruteak City via Route 37
+        FlagReqs:
+        ItemReqs:
+            - Squirtbottle
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Ecruteak City via Route 37
+        FileName: EcruteakCity.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+        LocationReqs: Route 37 via Route 36 Sudowoodo Junction
+        FlagReqs:
+        ItemReqs:
+            - Squirtbottle
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Ecruteak City Entrance
+        FileName: EcruteakCity.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs: 
+            - Ecruteak City via Route 38
+        FlagReqs:
+        ItemReqs:
+            - Pass
+            - S S Ticket
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Ecruteak City via Route 38
+        FileName: EcruteakCity.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+        LocationReqs: 
+            - Route 38 via Route 39
+        FlagReqs:
+            - Hive Badge
+            - Kanto Mode
+        ItemReqs:
+            - Pass
+            - S S Ticket
+            - Cut
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Ecruteak City
+        FileName: EcruteakCity.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+            - ECRUTEAK_CITY
+        LocationReqs:
+            - Ecruteak City Entrance
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: Ecruteak
+        Sublocations:
+            -
+                Name: Ecruteak City Hidden Hyper Potion
+                FileName: EcruteakCity.asm
+                SecondaryFile: EcruteakCity.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Ecruteak City
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: HYPER_POTION
+                Code: |
+                    EcruteakCityHiddenHyperPotion:
+                        ITEMLINE
+                SecondaryCode: '    bg_event 23, 14, BGEVENT_ITEM, EcruteakCityHiddenHyperPotion'
+                Text:
+                TrainerList: 
+                Sublocations:
+            -    
+                Name: Dance Theatre Surf HM
+                FileName: DanceTheatre.asm
+                Type: Item
+                HasPKMN: Yes
+                WildTableList: 
+                LocationReqs: Ecruteak City
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                Tags:
+                      -
+                        Name: Annoying
+                        SubTags:
+                ReachableReqs:
+                Code: |
+                    .GetSurf:
+                        writetext SurfGuyLikeADanceText
+                        promptbutton
+                        ITEMLINE
+                        setevent EVENT_GOT_HM03_SURF
+                        writetext SurfGuySurfExplanationText
+                        waitbutton
+                        closetext
+                        end
+                Text: |
+                    UnknownText_0x9999b:
+                        text "That's ITEMNAME."
+
+                        para "It's a move that"
+                        line "lets #MON swim"
+                        cont "across water."
+                        done
+                AREALV: 13       
+                TrainerList:
+                    - KIMONO_GIRL 2
+                    - KIMONO_GIRL 3
+                    - KIMONO_GIRL 4
+                    - KIMONO_GIRL 5
+                    - KIMONO_GIRL 6
+                Sublocations:
+            -
+                Name: Itemfinder House
+                FileName: EcruteakItemfinderHouse.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Ecruteak City
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: ITEMFINDER
+                Code: |
+                    EcruteakItemfinderGuy:
+                        faceplayer
+                        opentext
+                        checkevent EVENT_GOT_ITEMFINDER
+                        iftrue .itemfinder
+                        writetext EcruteakItemfinderAdventureText
+                        yesorno
+                        iffalse .no
+                        writetext EcruteakItemfinderTrueSpiritText
+                        promptbutton
+                        ITEMLINE
+                        setevent EVENT_GOT_ITEMFINDER
+
+                Text: |
+                    ItemfinderExplanationText:
+                        text "There are many"
+                        line "items lying about"
+
+                        para "that aren't ob-"
+                        line "vious."
+
+                        para "Use ITEMNAME to"
+                        line "check if there is"
+
+                        para "an item on the"
+                        line "ground near you."
+
+                        para "It doesn't show"
+                        line "the exact spot,"
+
+                        para "so you'll have to"
+                        line "look yourself."
+
+                        para "Oh yeah--I heard"
+                        line "there are items"
+
+                        para "in ECRUTEAK's"
+                        line "BURNED TOWER."
+                        done
+                TrainerList:
+                Sublocations:

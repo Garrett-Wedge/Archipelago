@@ -1,0 +1,61 @@
+Location:
+    -
+        Name: Violet City Gym Badge
+        FileName: VioletGym.asm
+        LocationReqs: Violet Gym Trainers
+        HasPKMN: No
+        Type: Gym
+        WildTableList:
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        ItemUnlock: Flash
+        InfeasibleBadges:
+        NormalBadge: Zephyr Badge
+        HintName: Violet
+        Tags:
+            -
+                Name: Leader
+                SubTags:
+                    - Violet
+        BadgeLine: |
+            VioletGymFalknerScript:
+                faceplayer
+                opentext
+                checkevent EVENT_BEAT_FALKNER
+                iftrue .FightDone
+                writetext FalknerIntroText
+                waitbutton
+                closetext
+                winlosstext FalknerWinLossText, 0
+                loadtrainer FALKNER, FALKNER1
+                startbattle
+                reloadmapafterbattle
+                setevent EVENT_BEAT_FALKNER
+                opentext
+                BADGELINE
+        Code:
+        Text:
+            -
+                File: VioletGym.asm
+                Text: |
+                    UnknownText_0x6854a:
+                        text "...Darn! My dad's"
+                        line "cherished bird"
+                        cont "#MON..."
+
+                        para "All right."
+                        line "Take this."
+
+                        para "It's the official"
+                        line "#MON LEAGUE"
+                        cont "BADGENAME."
+                        done
+            -
+                File: VioletGym.asm
+                Text: |
+                    UnknownText_0x685af:
+                        text "<PLAYER> received"
+                        line "BADGENAME."
+                        done

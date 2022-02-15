@@ -1,0 +1,81 @@
+Name: TMsPlusKeyItems
+Description: All TMs, HMs and Key Items are randomized. All TMs which require daily events, day night events or happiness checks are NOT included under these settings.
+BasePatch: Patches/BaseModificationsSpeedchoice.json
+RegularWildLevelScalingDefault: False
+SpecialWildLevelScalingDefault: False
+TrainerLevelScalingDefault: False
+DefaultModifiers:
+    - Modifiers/NoBacktrackingEarlyBike.yml
+    - Modifiers/ForceEarlyFlyV2.yml
+    - Modifiers/DefinitelyNoEarlySabrina.yml
+    - Modifiers/NoEarlyBasement.yml
+    - Modifiers/SkipReturningToNewBark.yml
+    - Modifiers/SkipE4AndFightRed.yml
+BannedLocations:
+AllowedLocations:
+    - Mr. Pokemon's Egg
+    - Route 31 Kenya Item
+    - Sprout Tower Flash HM
+    - Falkner TM
+    - Old Rod Guru
+    - Route 32 Roar Dude
+    - Union Cave Swift TM
+    - Bugsy TM
+    - Rain Dance
+    - Ilex Cut HM
+    - Headbutt Guy
+    - Sweet Scent Girl
+    - Bike Shop
+    - Coin Case Underground
+    - Buena Item
+    - Whitney TM
+    - Flower Shop
+    - Route 35 Rollout TM
+    - National Park Dig TM
+    - Rock Smash Guy
+    - Dance Theatre Surf HM
+    - Itemfinder House
+    - Morty TM
+    - Burned Tower Strength Item
+    - Olivine Strength HM
+    - Good Rod Guru
+    - Lighthouse Swagger TM
+    - Jasmine TM
+    - Secret Potion Man
+    - Chuck TM
+    - Cianwood Fly HM
+    - Mt Mortar Defense Curl TM
+    - Route 43 Sludge Bomb TM
+    - Red Scale Dropped
+    - Lake of Rage Detect TM
+    - Lake of Rage Hidden Power TM
+    - Rocket Base 2F Thief TM
+    - Rocket Base Whirlpool HM
+    - Pryce TM
+    - Goldenrod Tunnel Sleep Talk TM
+    - Radio Tower Rockets Part 1
+    - Goldenrod Tunnel Rocket Attack
+    - Radio Tower Rockets Part 2
+    - Radio Tower Sunny Day TM
+    - Ice Path Waterfall HM
+    - Ice Path Rest TM
+    - Clair TM
+    - Dark Cave Snore TM
+    - Elm SS Ticket
+    - Route 27 Solar Beam TM
+    - Victory Road Earthquake TM
+    - Vermilion City Lost Item
+    - Mr Psychic TM
+    - Copycat Rail Pass
+    - Erika TM
+    - Janine TM
+    - Hidden Machine Part
+    - Power Plant Activated
+    - Super Rod Guru
+    - Rock Tunnel Steel Wing TM
+    - Silver Wing Old Man
+    - Viridian Dream Eater TM
+    - Route 28 Steel Wing TM
+Goal: Red
+FlagsSet:
+    - Kanto Mode

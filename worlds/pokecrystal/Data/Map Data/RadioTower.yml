@@ -1,0 +1,299 @@
+Location:
+    -
+        Name: Radio Tower
+        FileName: RadioTower1F.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs: Goldenrod City Entrance
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList: 
+        Sublocations:
+            -
+                Name: Radio Tower Rockets Part 1
+                FileName: RadioTower5F.asm
+                Type: Item
+                HasPKMN: Yes
+                WildTableList: 
+                LocationReqs: Goldenrod City Entrance
+                FlagReqs:
+                    - Rocket Invasion
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Code: |
+                    FakeDirectorScript:
+                        turnobject RADIOTOWER5F_DIRECTOR, UP
+                        showemote EMOTE_SHOCK, RADIOTOWER5F_DIRECTOR, 15
+                        opentext
+                        writetext FakeDirectorTextBefore1
+                        waitbutton
+                        closetext
+                        applymovement RADIOTOWER5F_DIRECTOR, FakeDirectorMovement
+                        playmusic MUSIC_ROCKET_ENCOUNTER
+                        opentext
+                        writetext FakeDirectorTextBefore2
+                        waitbutton
+                        closetext
+                        winlosstext FakeDirectorWinText, 0
+                        setlasttalked RADIOTOWER5F_DIRECTOR
+                        loadtrainer EXECUTIVEM, EXECUTIVEM_3
+                        startbattle
+                        reloadmapafterbattle
+                        opentext
+                        writetext FakeDirectorTextAfter
+                        promptbutton
+                        ITEMLINE
+                        closetext
+                        setevent EVENT_BEAT_ROCKET_EXECUTIVEM_3
+                        checkevent EVENT_BEAT_ROCKET_EXECUTIVEM_1
+                        iftrue RadioTower5FDoneScript
+                        setscene SCENE_RADIOTOWER5F_BEAT_FAKE_DIRECTOR
+                        end
+                Text:
+                AREALV: 20
+                TrainerList: 
+                    - GRUNTM 14
+                    - GRUNTM 16
+                    - GRUNTM 23
+                    - GRUNTM 2
+                    - GRUNTM 5
+                    - GRUNTM 6
+                    - GRUNTM 7
+                    - GRUNTM 8
+                    - GRUNTM 10
+                    - SCIENTIST 4
+                    - SCIENTIST 5
+                    - GRUNTF 2
+                    - EXECUTIVEM 3
+                Sublocations:
+            -
+                Name: Radio Tower Rockets Part 2
+                FileName: RadioTower5F.asm
+                Type: Item
+                HasPKMN: Yes
+                WildTableList: 
+                LocationReqs: Goldenrod City Entrance
+                FlagReqs:
+                    - Rocket Invasion
+                ItemReqs:
+                    - Card Key
+                FlagsSet:
+                    - Beat Team Rocket
+                ReachableReqs:
+                NormalItem: CLEAR_BELL
+                Code: |
+                    .SkipHidingDirector:
+                        clearevent EVENT_MAHOGANY_MART_OWNERS
+                        clearflag ENGINE_ROCKETS_IN_MAHOGANY
+                        clearevent EVENT_GOLDENROD_CITY_CIVILIANS
+                        clearevent EVENT_RADIO_CARD_WOMAN
+                        clearevent EVENT_RADIO_TOWER_CIVILIANS_AFTER
+                        setevent EVENT_BLACKTHORN_CITY_SUPER_NERD_BLOCKS_GYM
+                        clearevent EVENT_BLACKTHORN_CITY_SUPER_NERD_DOES_NOT_BLOCK_GYM
+                        special PlayMapMusic
+                        disappear RADIOTOWER5F_DIRECTOR
+                        moveobject RADIOTOWER5F_DIRECTOR, 12, 0
+                        appear RADIOTOWER5F_DIRECTOR
+                        applymovement RADIOTOWER5F_DIRECTOR, RadioTower5FDirectorWalksIn
+                        turnobject PLAYER, RIGHT
+                        opentext
+                        writetext RadioTower5FDirectorThankYouText
+                        promptbutton
+                        ITEMLINE
+                        writetext RadioTower5FDirectorDescribeClearBellText
+                        waitbutton
+                        closetext
+                        setmapscene ECRUTEAK_TIN_TOWER_ENTRANCE, SCENE_DEFAULT
+                        setevent EVENT_GOT_CLEAR_BELL
+                        setevent EVENT_TEAM_ROCKET_DISBANDED
+                        checkpermaoptions EARLY_KANTO
+                        iffalse .skip_boat_and_train
+                    ; setup for boat
+                        setflag ENGINE_CREDITS_SKIP
+                        specialphonecall SPECIALCALL_SSTICKET
+                    ; fix people flags later on
+                        clearevent EVENT_GOLDENROD_TRAIN_STATION_GENTLEMAN
+                        clearevent EVENT_SAFFRON_TRAIN_STATION_POPULATION
+                    .skip_boat_and_train
+                        applymovement RADIOTOWER5F_DIRECTOR, RadioTower5FDirectorWalksOut
+                        playsound SFX_EXIT_BUILDING
+                        disappear RADIOTOWER5F_DIRECTOR
+                        checkevent EVENT_BEAT_ROCKET_EXECUTIVEM_3
+                        iftrue RadioTower5FDoneScript
+                        setscene SCENE_RADIOTOWER5F_BEAT_EXECUTIVE
+                        end
+                Text:
+                AREALV: 20
+                TrainerList: 
+                    - GRUNTM 3
+                    - GRUNTF 4
+                    - GRUNTM 22
+                    - EXECUTIVEF 1
+                    - EXECUTIVEM 1
+                Sublocations:
+                    -
+                        Name: Radio Tower Sunny Day TM
+                        FileName: RadioTower3F.asm
+                        Type: Item
+                        HasPKMN: No
+                        WildTableList: 
+                        LocationReqs: Radio Tower Rockets Part 2
+                        FlagReqs:
+                        ItemReqs:
+                            - Card Key
+                        FlagsSet:
+                        ReachableReqs:
+                        NormalItem: TM_SUNNY_DAY
+                        Code: |
+                            .NoRockets:
+                                writetext RadioTower3FCooltrainerFYoureMyHeroText
+                                promptbutton
+                                ITEMLINE
+                                iffalse .NoRoom
+                                writetext RadioTower3FCooltrainerFItsSunnyDayText
+                                waitbutton
+                                closetext
+                                setevent EVENT_GOT_SUNNY_DAY_FROM_RADIO_TOWER
+                                end
+                        Text: |
+                            UnknownText_0x5e821:
+                                text "It's ITEMNAME."
+                                line "It powers up fire-"
+                                cont "type moves for a"
+                                cont "while."
+                                done
+                        TrainerList: 
+                        Sublocations:
+                    -
+                        Name: Pink Bow
+                        FileName: RadioTower4F.asm
+                        Type: Item
+                        HasPKMN: No
+                        WildTableList: 
+                        LocationReqs: Radio Tower Rockets Part 2
+                        FlagReqs:
+                        ItemReqs:
+                            - Card Key
+                        FlagsSet:
+                        ReachableReqs:
+                        NormalItem: PINK_BOW
+                        Code: |
+                            .ClearedRockets:
+                                writetext RadioTower4FDJMaryText_ClearedRockets
+                                promptbutton
+                                ITEMLINE
+                                iffalse .NoRoom
+                                writetext RadioTower4FDJMaryText_GivePinkBow
+                                waitbutton
+                                closetext
+                                setevent EVENT_GOT_PINK_BOW_FROM_MARY
+                                end
+                        Text:
+                        TrainerList: 
+                        Sublocations:
+                    -
+                        Name: Radio Tower Ultra Ball
+                        FileName: RadioTower5F.asm
+                        Type: Item
+                        HasPKMN: No
+                        WildTableList: 
+                        LocationReqs: Radio Tower Rockets Part 2
+                        FlagReqs:
+                        ItemReqs:
+                            - Card Key
+                        FlagsSet:
+                        ReachableReqs:
+                        NormalItem: ULTRA_BALL
+                        IsBall: Yes
+                        Code: |
+                            RadioTower5FUltraBall:
+                                ITEMLINE
+                        Text:
+                        TrainerList: 
+                        Sublocations:
+            -
+                Name: Buena Item
+                FileName: RadioTower2F.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Radio Tower
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: BLUE_CARD
+                Code: |
+                    .Introduction:
+                        writetext RadioTower2FBuenaShowIntroductionText
+                        promptbutton
+                        setevent EVENT_MET_BUENA
+                        ITEMLINE
+                Text:
+                TrainerList:
+                Sublocations:
+            -
+                Name: Radio Card Quiz
+                FileName: RadioTower1F.asm
+                Type: Item
+                HasPKMN: Yes
+                WildTableList:
+                LocationReqs:
+                FlagReqs:
+                    - Impossible
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Code: |
+                    RadioTower1FRadioCardWomanScript:
+                        faceplayer
+                        opentext
+                        checkevent EVENT_RADIO_CARD_RECEIVED
+                        iftrue .GotCard
+                        writetext RadioTower1FRadioCardWomanOfferQuizText
+                        yesorno
+                        iffalse .NoQuiz
+                        writetext RadioTower1FRadioCardWomanQuestion1Text
+                        yesorno
+                        iffalse .WrongAnswer
+                        playsound SFX_ELEVATOR_END
+                        waitsfx
+                        writetext RadioTower1FRadioCardWomanQuestion2Text
+                        yesorno
+                        iffalse .WrongAnswer
+                        playsound SFX_ELEVATOR_END
+                        waitsfx
+                        writetext RadioTower1FRadioCardWomanQuestion3Text
+                        yesorno
+                        iftrue .WrongAnswer
+                        playsound SFX_ELEVATOR_END
+                        waitsfx
+                        writetext RadioTower1FRadioCardWomanQuestion4Text
+                        yesorno
+                        iffalse .WrongAnswer
+                        playsound SFX_ELEVATOR_END
+                        waitsfx
+                        writetext RadioTower1FRadioCardWomanQuestion5Text
+                        yesorno
+                        iftrue .WrongAnswer
+                        playsound SFX_ELEVATOR_END
+                        waitsfx
+                        writetext RadioTower1FRadioCardWomanYouWinText
+                        promptbutton
+                        ITEMLINE
+                        setevent EVENT_RADIO_CARD_RECEIVED
+                    .GotCard:
+                        writetext RadioTower1FRadioCardWomanTuneInText
+                        waitbutton
+                        closetext
+                        end
+                Text:
+                AREALV:
+                TrainerList:
+                Sublocations:

@@ -1,0 +1,301 @@
+Location:
+    -
+        Name: Goldenrod Tunnel Entrance A
+        FileName: GoldenrodCity.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+        LocationReqs: Goldenrod City Entrance
+        FlagReqs:
+        ItemReqs:
+            - Basement Key
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Goldenrod Tunnel Entrance B
+        FileName: GoldenrodCity.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+        LocationReqs: Goldenrod City Entrance
+        FlagReqs:
+        ItemReqs:
+            - Basement Key
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Goldenrod Tunnel Entrance
+        FileName: GoldenrodCity.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+        LocationReqs: Goldenrod Tunnel Entrance A
+        FlagReqs:
+        ItemReqs:
+            - Basement Key
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Goldenrod Tunnel Entrance
+        FileName: GoldenrodCity.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+        LocationReqs: Goldenrod Tunnel Entrance B
+        FlagReqs:
+        ItemReqs:
+            - Basement Key
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Goldenrod Tunnel
+        FileName: GoldenrodCity.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList: 
+        LocationReqs: Goldenrod Tunnel Entrance
+        FlagReqs:
+        ItemReqs:
+            - Basement Key
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        AREALV: 23
+        TrainerList:
+            - RIVAL1 10
+            - RIVAL1 11
+            - RIVAL1 12
+        HintName: Goldenrod
+        Sublocations:
+            -
+                Name: Goldenrod Tunnel Smoke Ball
+                FileName: GoldenrodUndergroundSwitchRoomEntrances.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Goldenrod Tunnel
+                FlagReqs:
+                ItemReqs:
+                    - Basement Key
+                FlagsSet:
+                ReachableReqs:
+                Tags:
+                      -
+                        Name: Annoying
+                        SubTags:
+                Code: |
+                    GoldenrodUndergroundSwitchRoomEntrancesSmokeBall:
+                        ITEMLINE
+                Text:
+                IsBall: Yes
+                NormalItem: SMOKE_BALL
+                TrainerList:
+                Sublocations:
+            -
+                Name: Goldenrod Tunnel Full Heal
+                FileName: GoldenrodUndergroundSwitchRoomEntrances.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Goldenrod Tunnel
+                FlagReqs:
+                ItemReqs:
+                    - Basement Key
+                FlagsSet:
+                ReachableReqs:
+                Code: |
+                    GoldenrodUndergroundSwitchRoomEntrancesFullHeal:
+                        ITEMLINE
+                Text:
+                IsBall: Yes
+                NormalItem: FULL_HEAL
+                TrainerList:
+                Sublocations:
+            -
+                Name: Goldenrod Tunnel Hidden Max Potion
+                FileName: GoldenrodUndergroundSwitchRoomEntrances.asm
+                SecondaryFile: GoldenrodUndergroundSwitchRoomEntrances.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Goldenrod Tunnel
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs:
+                    - Basement Key
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: MAX_POTION
+                Code: |
+                    GoldenrodUndergroundSwitchRoomEntrancesHiddenMaxPotion:
+                        ITEMLINE
+                SecondaryCode: '    bg_event  8,  9, BGEVENT_ITEM, GoldenrodUndergroundSwitchRoomEntrancesHiddenMaxPotion'
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Goldenrod Tunnel Hidden Revive
+                FileName: GoldenrodUndergroundSwitchRoomEntrances.asm
+                SecondaryFile: GoldenrodUndergroundSwitchRoomEntrances.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Goldenrod Tunnel
+                FlagReqs:
+                    - Hidden Items
+                ItemReqs:
+                    - Basement Key
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: REVIVE
+                Code: |
+                    GoldenrodUndergroundSwitchRoomEntrancesHiddenRevive:
+                        ITEMLINE
+                SecondaryCode: '    bg_event  1,  8, BGEVENT_ITEM, GoldenrodUndergroundSwitchRoomEntrancesHiddenRevive'
+                Text:
+                TrainerList: 
+                Sublocations:
+            -
+                Name: Goldenrod Tunnel Max Ether
+                FileName: GoldenrodUndergroundWarehouse.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Goldenrod Tunnel
+                FlagReqs:
+                ItemReqs:
+                    - Basement Key
+                FlagsSet:
+                ReachableReqs:
+                Code: |
+                    GoldenrodUndergroundWarehouseMaxEther:
+                        ITEMLINE
+                Text:
+                IsBall: Yes
+                NormalItem: MAX_ETHER
+                TrainerList:
+                Sublocations:
+            -
+                Name: Goldenrod Tunnel Sleep Talk TM
+                FileName: GoldenrodUndergroundWarehouse.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Goldenrod Tunnel
+                FlagReqs:
+                ItemReqs:
+                    - Basement Key
+                FlagsSet:
+                ReachableReqs:
+                Code: |
+                    GoldenrodUndergroundWarehouseTMSleepTalk:
+                        ITEMLINE
+                Text:
+                IsBall: Yes
+                NormalItem: TM_SLEEP_TALK
+                TrainerList:
+                Sublocations:
+            -
+                Name: Goldenrod Tunnel Ultra Ball
+                FileName: GoldenrodUndergroundWarehouse.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList: 
+                LocationReqs: Goldenrod Tunnel
+                FlagReqs:
+                ItemReqs:
+                    - Basement Key
+                FlagsSet:
+                ReachableReqs:
+                Code: |
+                    GoldenrodUndergroundWarehouseUltraBall:
+                        ITEMLINE
+                Text:
+                IsBall: Yes
+                NormalItem: ULTRA_BALL
+                TrainerList:
+                Sublocations:
+    -
+        Name: Goldenrod Tunnel Rocket Attack
+        FileName: GoldenrodUndergroundWarehouse.asm
+        Type: Item
+        HasPKMN: Yes
+        WildTableList: 
+        LocationReqs: Goldenrod Tunnel
+        FlagReqs:
+            - Rocket Invasion
+        ItemReqs:
+            - Basement Key
+        FlagsSet:
+        ReachableReqs:
+        HintName: Goldenrod
+        Code: |
+            GoldenrodUndergroundWarehouseDirectorScript:
+                faceplayer
+                opentext
+                checkevent EVENT_RECEIVED_CARD_KEY
+                iftrue .GotCardKey
+                checkcode VAR_BADGES
+                ifless 7, .GotCardKey
+                writetext DirectorIntroText
+                promptbutton
+                ITEMLINE
+                setevent EVENT_RECEIVED_CARD_KEY
+                setevent EVENT_GOLDENROD_DEPT_STORE_B1F_LAYOUT_1
+                clearevent EVENT_GOLDENROD_DEPT_STORE_B1F_LAYOUT_2
+                clearevent EVENT_GOLDENROD_DEPT_STORE_B1F_LAYOUT_3
+                writetext DirectorCardKeyText
+                promptbutton
+            .GotCardKey:
+                writetext DirectorAfterText
+                waitbutton
+                closetext
+                end
+        Text: |
+            UnknownText_0x7dbc6:
+                text "DIRECTOR: Who?"
+                line "What? You came to"
+                cont "rescue me?"
+
+                para "Thank you!"
+
+                para "The RADIO TOWER!"
+
+                para "What's happening"
+                line "there?"
+
+                para "Taken over by TEAM"
+                line "ROCKET?"
+
+                para "Here. Take this"
+                line "ITEMNAME."
+                done
+        AREALV: 20
+        TrainerList:
+            - GRUNTF 3
+            - GRUNTM 11
+            - GRUNTM 13
+            - GRUNTM 14
+            - GRUNTM 15
+            - GRUNTM 24
+            - GRUNTM 25
+            - BURGLAR 1
+            - BURGLAR 2
+        Sublocations:

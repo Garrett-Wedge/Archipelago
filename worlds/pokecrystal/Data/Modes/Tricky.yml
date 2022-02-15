@@ -1,0 +1,29 @@
+Name: Tricky Logic
+Description: More challenging than standard in terms of difficulty. All items (item balls, gift items, TMs, HMs, key items, pokegear cards, pokedex,etc...) in the game have their locations randomly shuffled. All badges in the game are also shuffled as well. All items which require daily events, day-night events or happiness checks are NOT included under these settings. Read the modifiers to further understand how this differs from standard.
+BasePatch: Patches/BaseModificationsSpeedchoice.json
+RegularWildLevelScalingDefault: False
+SpecialWildLevelScalingDefault: False
+TrainerLevelScalingDefault: False
+CoreProgress:
+    - 'Surf'
+    - 'Fog Badge'
+    - 'Pass'
+    - 'S S Ticket'
+    - 'Squirtbottle'
+DefaultModifiers:
+    - Modifiers/NoBacktrackingEarlyBike.yml
+    - Modifiers/ForceEarlyFlyV2.yml
+    - Modifiers/DefinitelyNoEarlySabrina.yml
+    - Modifiers/NoEarlyBasement.yml
+    - Modifiers/SkipReturningToNewBark.yml
+    - Modifiers/SkipE4AndFightRed.yml
+    - Modifiers/ProgressiveRods.yml
+    - Modifiers/RemoveCutTreeInIlex.yml
+    - Modifiers/VanillaClair.yml
+    - Modifiers/EnableTinTower.yml
+    - Modifiers/CardRandomization.yml
+BannedLocations:
+AllowedLocations:
+Goal: Red
+FlagsSet:
+    - Kanto Mode

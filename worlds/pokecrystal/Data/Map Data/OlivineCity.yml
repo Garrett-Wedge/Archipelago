@@ -1,0 +1,190 @@
+Location:
+    -
+        Name: Olivine City Entrance
+        FileName: OlivineCity.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Olivine City via Route 39
+        FlagReqs:
+        ItemReqs:
+            - Squirtbottle
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Olivine City via Route 39
+        FileName: OlivineCity.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: Route 39 via Route 38
+        FlagReqs:
+        ItemReqs:
+            - Squirtbottle
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Olivine City Entrance
+        FileName: OlivineCity.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: 
+            - Olivine City via SS Aqua
+        FlagReqs:
+        ItemReqs:
+            - S S Ticket
+            - Pass
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Olivine City via SS Aqua
+        FileName: OlivineCity.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList:
+        LocationReqs: 
+            - SS Aqua Entrance
+        FlagReqs:
+            - Hive Badge
+            - Kanto Mode
+        ItemReqs:
+            - S S Ticket
+            - Pass
+            - Cut
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        Sublocations:
+    -
+        Name: Olivine City
+        FileName: OlivineCity.asm
+        Type: Map
+        HasPKMN: Yes
+        WildTableList:
+        LocationReqs: Olivine City Entrance
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: Olivine
+        Sublocations:
+            -
+                Name: Olivine Strength HM
+                FileName: OlivineCafe.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Olivine City
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                Code: |
+                    OlivineCafeStrengthSailorScript:
+                        faceplayer
+                        opentext
+                        checkevent EVENT_GOT_HM04_STRENGTH
+                        iftrue .GotStrength
+                        writetext OlivineCafeStrengthSailorText
+                        promptbutton
+                        ITEMLINE
+                        setevent EVENT_GOT_HM04_STRENGTH
+                    .GotStrength:
+                        writetext OlivineCafeStrengthSailorText_GotStrength
+                        waitbutton
+                        closetext
+                        end
+                Text: |
+                    UnknownText_0x9c8df:
+                        text "Hah! Your #MON"
+                        line "sure look like"
+                        cont "lightweights!"
+
+                        para "They don't have"
+                        line "the power to move"
+                        cont "boulders aside."
+
+                        para "Here, use this"
+                        line "and teach them"
+                        cont "ITEMNAME!"
+                        done
+                TrainerList:
+                Sublocations:
+            -
+                Name: Good Rod Guru
+                FileName: OlivineGoodRodHouse.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Olivine City
+                FlagReqs:
+                ItemReqs:
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: GOOD_ROD
+                Code: |
+                    GoodRodGuru:
+                        faceplayer
+                        opentext
+                        checkevent EVENT_GOT_GOOD_ROD
+                        iftrue .AlreadyGotItem
+                        writetext OfferGoodRodText
+                        yesorno
+                        iffalse .DontWantIt
+                        writetext GiveGoodRodText
+                        promptbutton
+                        ITEMLINE
+                        writetext GaveGoodRodText
+                        waitbutton
+                        closetext
+                        setevent EVENT_GOT_GOOD_ROD
+                        end
+                Text:
+                TrainerList:
+                Sublocations:
+            -
+                Name: Olivine Port Hidden Protein
+                FileName: OlivinePort.asm
+                SecondaryFile: OlivinePort.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: SS Aqua via Vermilion
+                FlagReqs:
+                    - Hidden Items
+                    - Fog Badge
+                ItemReqs:
+                    - S S Ticket
+                    - Surf
+                FlagsSet:
+                ReachableReqs:
+                Tags:
+                      -
+                        Name: Annoying
+                        SubTags:
+                NormalItem: PROTEIN
+                Code: |
+                    OlivinePortHiddenProtein:
+                        ITEMLINE
+                SecondaryCode: '    bg_event  1, 22, BGEVENT_ITEM, OlivinePortHiddenProtein'
+                Text:
+                TrainerList: 
+                Sublocations:

@@ -1,0 +1,46 @@
+Location:
+    -
+        Name: Olivine City Gym Badge
+        FileName: OlivineGym.asm
+        LocationReqs: Olivine Gym Trainers
+        Type: Gym
+        HasPKMN: No
+        WildTableList:
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        ItemUnlock:
+        InfeasibleBadges:
+        NormalBadge: Mineral Badge
+        HintName: Olivine
+        Tags:
+            -
+                Name: Leader
+                SubTags:
+                    - Olivine
+        BadgeLine: |
+            OlivineGymJasmineScript:
+                faceplayer
+                opentext
+                checkevent EVENT_BEAT_JASMINE
+                iftrue .FightDone
+                writetext Jasmine_SteelTypeIntro
+                waitbutton
+                closetext
+                winlosstext Jasmine_BetterTrainer, 0
+                loadtrainer JASMINE, JASMINE1
+                startbattle
+                reloadmapafterbattle
+                setevent EVENT_BEAT_JASMINE
+                opentext
+                BADGELINE
+        Code:
+        Text:
+            -
+                File: OlivineGym.asm
+                Text: |        
+                    Text_ReceivedMineralBadge:
+                        text "<PLAYER> received"
+                        line "BADGENAME."
+                        done

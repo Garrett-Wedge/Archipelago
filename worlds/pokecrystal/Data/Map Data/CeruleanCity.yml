@@ -1,0 +1,41 @@
+Location:
+    -
+        Name: Cerulean City
+        FileName: CeruleanCity.asm
+        Type: Map
+        HasPKMN: No
+        WildTableList: 
+        LocationReqs:
+            - Route 5
+        FlagReqs:
+        ItemReqs:
+        FlagsSet:
+        ReachableReqs:
+        Code:
+        Text:
+        TrainerList:
+        HintName: Cerulean
+        Sublocations:
+            -
+                Name: Cerulean City Hidden Berserk Gene
+                FileName: CeruleanCity.asm
+                SecondaryFile: CeruleanCity.asm
+                Type: Item
+                HasPKMN: No
+                WildTableList:
+                LocationReqs: Route 25
+                FlagReqs:
+                    - Hidden Items
+                    - Fog Badge
+                ItemReqs:
+                    - Surf
+                FlagsSet:
+                ReachableReqs:
+                NormalItem: BERSERK_GENE
+                Code: |
+                    CeruleanCityHiddenBerserkGene:
+                        ITEMLINE
+                SecondaryCode: '    bg_event  2, 12, BGEVENT_ITEM, CeruleanCityHiddenBerserkGene'
+                Text:
+                TrainerList: 
+                Sublocations:
