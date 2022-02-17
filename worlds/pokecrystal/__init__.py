@@ -11,14 +11,14 @@ class PokemonCrystalWorld(World):
     """
     Pokemon Crystal is a role-playing game released in 2000. It is an early part of a very popular, long-running
     franchise. This game features turn-based combat between Pokemon trainers. You play as a character who collects
-    Pokemon who help you navigate the Johto and Kanto regions, with the goal of defeating the elite four and become the
-    champion.
+    Pokemon who help you navigate the Johto and Kanto regions, with the goal of defeating the elite four and becoming
+    the champion.
     """
     game = "Pokemon Crystal"
     options = pokemon_crystal_options
+    # TODO: implement
     topology_present = False
     item_name_to_id = {
-        "Nothing": -1
     }
     location_name_to_id = {
         "Cheat Console": -1,

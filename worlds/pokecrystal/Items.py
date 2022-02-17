@@ -5,6 +5,27 @@ from BaseClasses import Item
 offset = 251000
 badgeoffset = 900
 
+def pc_data_to_ap_id(data, event):
+    # TODO: implement
+    if event or data[2] is None or data[0] == 'Shop':
+        return None
+    offset = 251000
+    if data[0] in ['Item', 'BossKey', 'Compass', 'Map', 'SmallKey', 'Token', 'GanonBossKey', 'FortressSmallKey', 'Song']:
+        return offset + data[2]
+    else:
+        raise Exception(f'Unexpected OOT item type found: {data[0]}')
+
+def ap_id_to_pc_data(ap_id):
+    offset = 251000
+    val = ap_id - offset
+    if val > 900:  # this is a badge
+        val = val - 900
+        # TODO: implement
+    try:
+        return list(filter(lambda d: d[1][0] == 'Item' and d[1][2] == val, item_table.items()))[0]
+    except IndexError:
+        raise Exception(f'Could not find desired item ID: {ap_id}')
+
 class PokemonCrystalItem(Item):
     game: str = "Pokemon Crystal"
 

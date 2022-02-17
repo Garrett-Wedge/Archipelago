@@ -1,6 +1,7 @@
 # Slightly modified from the Location.py present in PCKIR
 
-from BaseClasses import Location
+from .Location import Location
+from BaseClasses import Region
 
 
 class Tag:
@@ -16,7 +17,7 @@ class Tag:
             self.SubTags = []
 
 
-class PokemonCrystalLocation(Location):
+class PokemonCrystalRegion(Region):
     game: str = "Pokemon Crystal"
 
     def __init__(self, yamlTree, player: int, name = '', code = None, parent = None ):
