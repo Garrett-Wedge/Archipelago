@@ -1,8 +1,8 @@
 from typing import NamedTuple, Union
 import logging
 
-from BaseClasses import Item
 from .Options import pokemon_crystal_options
+from .Items import *
 
 from ..AutoWorld import World
 
@@ -18,8 +18,7 @@ class PokemonCrystalWorld(World):
     options = pokemon_crystal_options
     # TODO: implement
     topology_present = False
-    item_name_to_id = {
-    }
+    item_name_to_id = {item_name: pc_data_to_ap_id(data, False) for item_name, data in item_table}
     location_name_to_id = {
         "Cheat Console": -1,
         "Server": -2
