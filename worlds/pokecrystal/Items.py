@@ -11,7 +11,7 @@ def pc_data_to_ap_id(data, event):
     if data[0] in ['Berry', 'Ball', 'Healing', 'Key', 'HM', 'TM', 'Valuable', 'TypeBoosting', 'MonBoosting',
                    'HeldItems', 'XItems', 'EvolutionStone', 'OutsideBattle', 'EVBooster', 'AddedIn', 'Mail', 'Apricorn']:
         return offset + data[2]
-    elif data[0] == 'Badge':
+    elif data[0] == 'Badge':  # badges come from a different file, so I wanted a clear way to distinguish them
         return offset + badgeoffset + data[2]
     else:
         raise Exception(f'Unexpected Pokemon Crystal item type found: {data[0]}')

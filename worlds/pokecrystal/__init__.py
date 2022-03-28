@@ -16,9 +16,9 @@ class PokemonCrystalWorld(World):
     """
     game = "Pokemon Crystal"
     options = pokemon_crystal_options
-    # TODO: implement
     topology_present = False
     item_name_to_id = {item_name: pc_data_to_ap_id(data, False) for item_name, data in item_table}
+    # TODO: implement
     location_name_to_id = {
         "Cheat Console": -1,
         "Server": -2
