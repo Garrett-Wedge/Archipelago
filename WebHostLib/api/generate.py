@@ -45,7 +45,7 @@ def generate_api():
                     "detail": app.config["MAX_ROLL"]}, 409
         meta = get_meta(meta_options_source)
         meta["race"] = race
-        results, gen_options = roll_options(options)
+        results, gen_options = roll_options(options, meta["plando_options"])
         if any(type(result) == str for result in results.values()):
             return {"text": str(results),
                     "detail": results}, 400
@@ -63,7 +63,6 @@ def generate_api():
                     "url": url_for("wait_seed", seed=gen.id, _external=True)}, 201
     except Exception as e:
         return {"text": "Uncaught Exception:" + str(e)}, 500
-
 
 
 @api_endpoints.route('/status/<suuid:seed>')

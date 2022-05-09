@@ -7,8 +7,8 @@ required to send and receive items between the game and server.
 Client implementation is out of scope of this document. Please refer to an
 existing game that provides a similar API to yours.
 Refer to the following documents as well:
-    * [network protocol.md](https://github.com/ArchipelagoMW/Archipelago/blob/main/docs/network%20protocol.md)
-    * [adding games.md](https://github.com/ArchipelagoMW/Archipelago/blob/main/docs/adding%20games.md)
+- [network protocol.md](https://github.com/ArchipelagoMW/Archipelago/blob/main/docs/network%20protocol.md)
+- [adding games.md](https://github.com/ArchipelagoMW/Archipelago/blob/main/docs/adding%20games.md)
 
 Archipelago will be abbreviated as "AP" from now on.
 
@@ -43,11 +43,29 @@ class MyGameWorld(World):
 
 ## Definitions
 
+This section will cover various classes and objects you can use for your world.
+While some of the attributes and methods are mentioned here not all of them are,
+but you can find them in `BaseClasses.py`.
+
 ### World Class
 
 A `World` class is the class with all the specifics of a certain game to be
 included. It will be instantiated for each player that rolls a seed for that
 game.
+
+### WebWorld Class
+
+A `WebWorld` class contains specific attributes and methods that can be modified
+for your world specifically on the webhost.
+
+`settings_page` which can be changed to a link instead of an AP generated settings page.
+
+`theme` to be used for your game specific AP pages. Available themes:
+| dirt  | grass (default) | grassFlowers | ice  | jungle  | ocean | partyTime |
+|---|---|---|---|---|---|---|
+| <img src="img/theme_dirt.JPG" width="100"> | <img src="img/theme_grass.JPG" width="100"> | <img src="img/theme_grassFlowers.JPG" width="100"> | <img src="img/theme_ice.JPG" width="100"> | <img src="img/theme_jungle.JPG" width="100"> | <img src="img/theme_ocean.JPG" width="100"> | <img src="img/theme_partyTime.JPG" width="100"> |
+
+`bug_report_page` (optional) can be a link to a bug reporting page, most likely a GitHub issue page, that will be placed by the site to help direct users to report bugs.
 
 ### MultiWorld Object
 
@@ -82,6 +100,7 @@ Each location has a `name` and an `id` (a.k.a. "code" or "address"), is placed
 in a Region and has access rules.
 The name needs to be unique in each game, the ID needs to be unique across all
 games and is best in the same range as the item IDs.
+World-specific IDs are 1 to 2<sup>53</sup>-1, IDs ≤ 0 are global and reserved.
 
 Special locations with ID `None` can hold events.
 
@@ -217,7 +236,7 @@ By convention options are defined in `Options.py` and will be used when parsing
 the players' yaml files.
 
 Each option has its own class, inherits from a base option type, has a docstring 
-to describe it and a `displayname` property for display on the website and in
+to describe it and a `display_name` property for display on the website and in
 spoiler logs.
 
 The actual name as used in the yaml is defined in a `dict[str, Option]`, that is
@@ -263,7 +282,7 @@ import typing
 
 class Difficulty(Choice):
     """Sets overall game difficulty."""
-    displayname = "Difficulty"
+    display_name = "Difficulty"
     option_easy = 0
     option_normal = 1
     option_hard = 2
@@ -273,14 +292,14 @@ class Difficulty(Choice):
 
 class FinalBossHP(Range):
     """Sets the HP of the final boss"""
-    displayname = "Final Boss HP"
+    display_name = "Final Boss HP"
     range_start = 100
     range_end = 10000
     default = 2000
 
 class FixXYZGlitch(Toggle):
     """Fixes ABC when you do XYZ"""
-    displayname = "Fix XYZ Glitch"
+    display_name = "Fix XYZ Glitch"
 
 # By convention we call the options dict variable `<world>_options`.
 mygame_options: typing.Dict[str, type(Option)] = {
@@ -384,7 +403,7 @@ The world has to provide the following things for generation
   `self.world.get_filled_locations(self.player)` will filter for this world.
   `item.player` can be used to see if it's a local item.
 
-In addition the following methods can be implemented
+In addition, the following methods can be implemented and attributes can be set
 
 * `def generate_early(self)`
   called per player before any items or locations are created. You can set
@@ -404,14 +423,17 @@ In addition the following methods can be implemented
   before, during and after the regular fill process, before `generate_output`.
 * `fill_slot_data` and `modify_multidata` can be used to modify the data that
   will be used by the server to host the MultiWorld.
-* `def get_required_client_version(self)`
-  can return a tuple of 3 ints to make sure the client is compatible to this
-  world (e.g. item IDs) when connecting.
+* `required_client_version: Tuple(int, int, int)`
+  Client version as tuple of 3 ints to make sure the client is compatible to
+  this world (e.g. implements all required features) when connecting.
+* `assert_generate(cls, world)` is a class method called at the start of
+  generation to check the existence of prerequisite files, usually a ROM for
+  games which require one.
 
 #### generate_early
 
 ```python
-def generate_early(self):
+def generate_early(self) -> None:
     # read player settings to world instance
     self.final_boss_hp = self.world.final_boss_hp[self.player].value
 ```
@@ -437,7 +459,7 @@ def create_event(self, event: str):
 #### create_items
 
 ```python
-def create_items(self):
+def create_items(self) -> None:
     # Add items to the Multiworld.
     # If there are two of the same item, the item has to be twice in the pool.
     # Which items are added to the pool may depend on player settings,
@@ -464,7 +486,7 @@ def create_items(self):
 #### create_regions
 
 ```python
-def create_regions(self):
+def create_regions(self) -> None:
     # Add regions to the multiworld. "Menu" is the required starting point.
     # Arguments to Region() are name, type, human_readable_name, player, world
     r = Region("Menu", None, "Menu", self.player, self.world)
@@ -499,7 +521,7 @@ def create_regions(self):
 #### generate_basic
 
 ```python
-def generate_basic(self):
+def generate_basic(self) -> None:
     # place "Victory" at "Final Boss" and set collection as win condition
     self.world.get_location("Final Boss", self.player)\
         .place_locked_item(self.create_event("Victory"))
@@ -520,7 +542,7 @@ def generate_basic(self):
 from ..generic.Rules import add_rule, set_rule, forbid_item
 from Items import get_item_type
 
-def set_rules(self):
+def set_rules(self) -> None:
     # For some worlds this step can be omitted if either a Logic mixin 
     # (see below) is used, it's easier to apply the rules from data during
     # location generation or everything is in generate_basic

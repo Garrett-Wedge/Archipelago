@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import shutil
 import typing
 import builtins
 import os
@@ -11,6 +12,7 @@ import io
 import collections
 import importlib
 import logging
+from tkinter import Tk
 
 
 def tuplize_version(version: str) -> Version:
@@ -23,10 +25,10 @@ class Version(typing.NamedTuple):
     build: int
 
 
-__version__ = "0.2.3"
+__version__ = "0.3.2"
 version_tuple = tuplize_version(__version__)
 
-from yaml import load, dump, safe_load
+from yaml import load, load_all, dump, SafeLoader
 
 try:
     from yaml import CLoader as Loader
@@ -34,47 +36,50 @@ except ImportError:
     from yaml import Loader
 
 
-def int16_as_bytes(value):
+def int16_as_bytes(value: int) -> typing.List[int]:
     value = value & 0xFFFF
     return [value & 0xFF, (value >> 8) & 0xFF]
 
 
-def int32_as_bytes(value):
+def int32_as_bytes(value: int) -> typing.List[int]:
     value = value & 0xFFFFFFFF
     return [value & 0xFF, (value >> 8) & 0xFF, (value >> 16) & 0xFF, (value >> 24) & 0xFF]
 
 
-def pc_to_snes(value):
+def pc_to_snes(value: int) -> int:
     return ((value << 1) & 0x7F0000) | (value & 0x7FFF) | 0x8000
 
 
-def snes_to_pc(value):
+def snes_to_pc(value: int) -> int:
     return ((value & 0x7F0000) >> 1) | (value & 0x7FFF)
 
 
-def cache_argsless(function):
-    if function.__code__.co_argcount:
-        raise Exception("Can only cache 0 argument functions with this cache.")
+RetType = typing.TypeVar("RetType")
 
-    result = sentinel = object()
 
-    def _wrap():
+def cache_argsless(function: typing.Callable[[], RetType]) -> typing.Callable[[], RetType]:
+    assert not function.__code__.co_argcount, "Can only cache 0 argument functions with this cache."
+
+    sentinel = object()
+    result: typing.Union[object, RetType] = sentinel
+
+    def _wrap() -> RetType:
         nonlocal result
         if result is sentinel:
             result = function()
-        return result
+        return typing.cast(RetType, result)
 
     return _wrap
 
 
 def is_frozen() -> bool:
-    return getattr(sys, 'frozen', False)
+    return typing.cast(bool, getattr(sys, 'frozen', False))
 
 
-def local_path(*path):
-    if local_path.cached_path:
-        return os.path.join(local_path.cached_path, *path)
-
+def local_path(*path: str) -> str:
+    """Returns path to a file in the local Archipelago installation or source."""
+    if hasattr(local_path, 'cached_path'):
+        pass
     elif is_frozen():
         if hasattr(sys, "_MEIPASS"):
             # we are running in a PyInstaller bundle
@@ -94,19 +99,45 @@ def local_path(*path):
     return os.path.join(local_path.cached_path, *path)
 
 
-local_path.cached_path = None
+def home_path(*path: str) -> str:
+    """Returns path to a file in the user home's Archipelago directory."""
+    if hasattr(home_path, 'cached_path'):
+        pass
+    elif sys.platform.startswith('linux'):
+        home_path.cached_path = os.path.expanduser('~/Archipelago')
+        os.makedirs(home_path.cached_path, 0o700, exist_ok=True)
+    else:
+        # not implemented
+        home_path.cached_path = local_path()  # this will generate the same exceptions we got previously
+
+    return os.path.join(home_path.cached_path, *path)
 
 
-def output_path(*path):
-    if output_path.cached_path:
+def user_path(*path: str) -> str:
+    """Returns either local_path or home_path based on write permissions."""
+    if hasattr(user_path, 'cached_path'):
+        pass
+    elif os.access(local_path(), os.W_OK):
+        user_path.cached_path = local_path()
+    else:
+        user_path.cached_path = home_path()
+        # populate home from local - TODO: upgrade feature
+        if user_path.cached_path != local_path() and not os.path.exists(user_path('host.yaml')):
+            for dn in ('Players', 'data/sprites'):
+                shutil.copytree(local_path(dn), user_path(dn), dirs_exist_ok=True)
+            for fn in ('manifest.json', 'host.yaml'):
+                shutil.copy2(local_path(fn), user_path(fn))
+
+    return os.path.join(user_path.cached_path, *path)
+
+
+def output_path(*path: str):
+    if hasattr(output_path, 'cached_path'):
         return os.path.join(output_path.cached_path, *path)
-    output_path.cached_path = local_path(get_options()["general_options"]["output_path"])
+    output_path.cached_path = user_path(get_options()["general_options"]["output_path"])
     path = os.path.join(output_path.cached_path, *path)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     return path
-
-
-output_path.cached_path = None
 
 
 def open_file(filename):
@@ -117,7 +148,21 @@ def open_file(filename):
         subprocess.call([open_command, filename])
 
 
-parse_yaml = safe_load
+# from https://gist.github.com/pypt/94d747fe5180851196eb#gistcomment-4015118 with some changes
+class UniqueKeyLoader(SafeLoader):
+    def construct_mapping(self, node, deep=False):
+        mapping = set()
+        for key_node, value_node in node.value:
+            key = self.construct_object(key_node, deep=deep)
+            if key in mapping:
+                logging.error(f"YAML duplicates sanity check failed{key_node.start_mark}")
+                raise KeyError(f"Duplicate key {key} found in YAML. Already found keys: {mapping}.")
+            mapping.add(key)
+        return super().construct_mapping(node, deep)
+
+
+parse_yaml = functools.partial(load, Loader=UniqueKeyLoader)
+parse_yamls = functools.partial(load_all, Loader=UniqueKeyLoader)
 unsafe_parse_yaml = functools.partial(load, Loader=Loader)
 
 
@@ -168,7 +213,7 @@ def get_default_options() -> dict:
             "output_path": "output",
         },
         "factorio_options": {
-            "executable": "factorio\\bin\\x64\\factorio",
+            "executable": os.path.join("factorio", "bin", "x64", "factorio"),
         },
         "sm_options": {
             "rom_file": "Super Metroid (JU).sfc",
@@ -205,7 +250,7 @@ def get_default_options() -> dict:
         },
         "generator": {
             "teams": 1,
-            "enemizer_path": "EnemizerCLI/EnemizerCLI.Core.exe",
+            "enemizer_path": os.path.join("EnemizerCLI", "EnemizerCLI.Core.exe"),
             "player_files_path": "Players",
             "players": 0,
             "weights_file_path": "weights.yaml",
@@ -249,8 +294,11 @@ def update_options(src: dict, dest: dict, filename: str, keys: list) -> dict:
 @cache_argsless
 def get_options() -> dict:
     if not hasattr(get_options, "options"):
-        locations = ("options.yaml", "host.yaml",
-                     local_path("options.yaml"), local_path("host.yaml"))
+        filenames = ("options.yaml", "host.yaml")
+        locations = []
+        if os.path.join(os.getcwd()) != local_path():
+            locations += filenames  # use files from cwd only if it's not the local_path
+        locations += [user_path(filename) for filename in filenames]
 
         for location in locations:
             if os.path.exists(location):
@@ -260,7 +308,7 @@ def get_options() -> dict:
                 get_options.options = update_options(get_default_options(), options, location, list())
                 break
         else:
-            raise FileNotFoundError(f"Could not find {locations[1]} to load options.")
+            raise FileNotFoundError(f"Could not find {filenames[1]} to load options.")
     return get_options.options
 
 
@@ -275,7 +323,7 @@ def get_location_name_from_id(code: int) -> str:
 
 
 def persistent_store(category: str, key: typing.Any, value: typing.Any):
-    path = local_path("_persistent_storage.yaml")
+    path = user_path("_persistent_storage.yaml")
     storage: dict = persistent_load()
     category = storage.setdefault(category, {})
     category[key] = value
@@ -287,7 +335,7 @@ def persistent_load() -> typing.Dict[dict]:
     storage = getattr(persistent_load, "storage", None)
     if storage:
         return storage
-    path = local_path("_persistent_storage.yaml")
+    path = user_path("_persistent_storage.yaml")
     storage: dict = {}
     if os.path.exists(path):
         try:
@@ -301,63 +349,9 @@ def persistent_load() -> typing.Dict[dict]:
     return storage
 
 
-def get_adjuster_settings(romfile: str, skip_questions: bool = False) -> typing.Tuple[str, bool]:
-    if hasattr(get_adjuster_settings, "adjuster_settings"):
-        adjuster_settings = getattr(get_adjuster_settings, "adjuster_settings")
-    else:
-        adjuster_settings = persistent_load().get("adjuster", {}).get("last_settings_3", {})
-
-    if adjuster_settings:
-        import pprint
-        from worlds.alttp.Rom import get_base_rom_path
-        adjuster_settings.rom = romfile
-        adjuster_settings.baserom = get_base_rom_path()
-        adjuster_settings.world = None
-        whitelist = {"music", "menuspeed", "heartbeep", "heartcolor", "ow_palettes", "quickswap",
-                     "uw_palettes", "sprite"}
-        printed_options = {name: value for name, value in vars(adjuster_settings).items() if name in whitelist}
-        if hasattr(adjuster_settings, "sprite_pool"):
-            sprite_pool = {}
-            for sprite in getattr(adjuster_settings, "sprite_pool"):
-                if sprite in sprite_pool:
-                    sprite_pool[sprite] += 1
-                else:
-                    sprite_pool[sprite] = 1
-            if sprite_pool:
-                printed_options["sprite_pool"] = sprite_pool
-
-        if hasattr(get_adjuster_settings, "adjust_wanted"):
-            adjust_wanted = getattr(get_adjuster_settings, "adjust_wanted")
-        elif persistent_load().get("adjuster", {}).get("never_adjust", False):  # never adjust, per user request
-            return romfile, False
-        elif skip_questions:
-            return romfile, False
-        else:
-            adjust_wanted = input(f"Last used adjuster settings were found. Would you like to apply these? \n"
-                                  f"{pprint.pformat(printed_options)}\n"
-                                  f"Enter yes, no or never: ")
-        if adjust_wanted and adjust_wanted.startswith("y"):
-            if hasattr(adjuster_settings, "sprite_pool"):
-                from LttPAdjuster import AdjusterWorld
-                adjuster_settings.world = AdjusterWorld(getattr(adjuster_settings, "sprite_pool"))
-
-            adjusted = True
-            import LttPAdjuster
-            _, romfile = LttPAdjuster.adjust(adjuster_settings)
-
-            if hasattr(adjuster_settings, "world"):
-                delattr(adjuster_settings, "world")
-        elif adjust_wanted and "never" in adjust_wanted:
-            persistent_store("adjuster", "never_adjust", True)
-            return romfile, False
-        else:
-            adjusted = False
-            if not hasattr(get_adjuster_settings, "adjust_wanted"):
-                logging.info(f"Skipping post-patch adjustment")
-        get_adjuster_settings.adjuster_settings = adjuster_settings
-        get_adjuster_settings.adjust_wanted = adjust_wanted
-        return romfile, adjusted
-    return romfile, False
+def get_adjuster_settings(gameName: str):
+    adjuster_settings = persistent_load().get("adjuster", {}).get(gameName, {})
+    return adjuster_settings
 
 
 @cache_argsless
@@ -389,7 +383,7 @@ class RestrictedUnpickler(pickle.Unpickler):
         if module == "builtins" and name in safe_builtins:
             return getattr(builtins, name)
         # used by MultiServer -> savegame/multidata
-        if module == "NetUtils" and name in {"NetworkItem", "ClientStatus", "Hint"}:
+        if module == "NetUtils" and name in {"NetworkItem", "ClientStatus", "Hint", "SlotType", "NetworkSlot"}:
             return getattr(self.net_utils_module, name)
         # Options and Plando are unpickled by WebHost -> Generate
         if module == "worlds.generic" and name in {"PlandoItem", "PlandoConnection"}:
@@ -426,9 +420,9 @@ loglevel_mapping = {'error': logging.ERROR, 'info': logging.INFO, 'warning': log
 
 
 def init_logging(name: str, loglevel: typing.Union[str, int] = logging.INFO, write_mode: str = "w",
-                 log_format: str = "[%(name)s]: %(message)s", exception_logger: str = ""):
+                 log_format: str = "[%(name)s at %(asctime)s]: %(message)s", exception_logger: str = ""):
     loglevel: int = loglevel_mapping.get(loglevel, loglevel)
-    log_folder = local_path("logs")
+    log_folder = user_path("logs")
     os.makedirs(log_folder, exist_ok=True)
     root_logger = logging.getLogger()
     for handler in root_logger.handlers[:]:
@@ -474,3 +468,27 @@ def stream_input(stream, queue):
     thread = Thread(target=queuer, name=f"Stream handler for {stream.name}", daemon=True)
     thread.start()
     return thread
+
+
+def tkinter_center_window(window: Tk):
+    window.update()
+    xPos = int(window.winfo_screenwidth() / 2 - window.winfo_reqwidth() / 2)
+    yPos = int(window.winfo_screenheight() / 2 - window.winfo_reqheight() / 2)
+    window.geometry("+{}+{}".format(xPos, yPos))
+
+
+class VersionException(Exception):
+    pass
+
+
+# noinspection PyPep8Naming
+def format_SI_prefix(value, power=1000, power_labels=('', 'k', 'M', 'G', 'T', "P", "E", "Z", "Y")) -> str:
+    n = 0
+
+    while value > power:
+        value /= power
+        n += 1
+    if type(value) == int:
+        return f"{value} {power_labels[n]}"
+    else:
+        return f"{value:0.3f} {power_labels[n]}"
