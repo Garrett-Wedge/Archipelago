@@ -5,10 +5,22 @@ from .Locations import location_table, V6Location
 from .Options import v6_options
 from .Rules import set_rules
 from .Regions import create_regions
-from BaseClasses import Region, RegionType, Entrance, Item, MultiWorld
-from ..AutoWorld import World
+from BaseClasses import Item, ItemClassification, Tutorial
+from ..AutoWorld import World, WebWorld
 
 client_version = 1
+
+
+class V6Web(WebWorld):
+    tutorials = [Tutorial(
+        "Multiworld Setup Guide",
+        "A guide to setting up VVVVVV for Multiworld.",
+        "English",
+        "setup_en.md",
+        "setup/en",
+        ["N00byKing"]
+    )]
+
 
 class V6World(World):
     """ 
@@ -17,6 +29,7 @@ class V6World(World):
 
     game: str = "VVVVVV"
     topology_present = False
+    web = V6Web()
 
     item_name_to_id = item_table
     location_name_to_id = location_table
@@ -40,7 +53,7 @@ class V6World(World):
         set_rules(self.world, self.player, self.area_connections, self.area_cost_map)
 
     def create_item(self, name: str) -> Item:
-        return V6Item(name, True, item_table[name], self.player)
+        return V6Item(name, ItemClassification.progression, item_table[name], self.player)
 
     def generate_basic(self):
         trinkets = [self.create_item("Trinket " + str(i+1).zfill(2)) for i in range(0,20)]
@@ -58,7 +71,7 @@ class V6World(World):
             "AreaRando": self.area_connections,
             "DoorCost": self.world.DoorCost[self.player].value,
             "AreaCostRando": self.area_cost_map,
-            "DeathLink": self.world.DeathLink[self.player].value,
+            "DeathLink": self.world.death_link[self.player].value,
             "DeathLink_Amnesty": self.world.DeathLinkAmnesty[self.player].value
         }
 

@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 import copy
-from enum import Enum, unique
+from enum import unique, IntEnum, IntFlag
 import logging
 import json
 import functools
 from collections import OrderedDict, Counter, deque
-from typing import List, Dict, Optional, Set, Iterable, Union, Any, Tuple, TypedDict, Callable
+from typing import List, Dict, Optional, Set, Iterable, Union, Any, Tuple, TypedDict, Callable, NamedTuple
 import typing  # this can go away when Python 3.8 support is dropped
 import secrets
 import random
@@ -23,6 +23,8 @@ class Group(TypedDict, total=False):
     players: Set[int]
     item_pool: Set[str]
     replacement_items: Dict[int, Optional[str]]
+    local_items: Set[str]
+    non_local_items: Set[str]
 
 
 class MultiWorld():
@@ -218,27 +220,47 @@ class MultiWorld():
                         raise Exception(f"Cannot ItemLink across games. Link: {item_link['name']}")
                     item_links[item_link["name"]]["players"][player] = item_link["replacement_item"]
                     item_links[item_link["name"]]["item_pool"] &= set(item_link["item_pool"])
+                    item_links[item_link["name"]]["exclude"] |= set(item_link.get("exclude", []))
+                    item_links[item_link["name"]]["local_items"] &= set(item_link.get("local_items", []))
+                    item_links[item_link["name"]]["non_local_items"] &= set(item_link.get("non_local_items", []))
                 else:
                     if item_link["name"] in self.player_name.values():
                         raise Exception(f"Cannot name a ItemLink group the same as a player ({item_link['name']}) ({self.get_player_name(player)}).")
                     item_links[item_link["name"]] = {
                         "players": {player: item_link["replacement_item"]},
                         "item_pool": set(item_link["item_pool"]),
-                        "game": self.game[player]
+                        "exclude": set(item_link.get("exclude", [])),
+                        "game": self.game[player],
+                        "local_items": set(item_link.get("local_items", [])),
+                        "non_local_items": set(item_link.get("non_local_items", []))
                     }
 
         for name, item_link in item_links.items():
             current_item_name_groups = AutoWorld.AutoWorldRegister.world_types[item_link["game"]].item_name_groups
             pool = set()
+            local_items = set()
+            non_local_items = set()
             for item in item_link["item_pool"]:
                 pool |= current_item_name_groups.get(item, {item})
+            for item in item_link["exclude"]:
+                pool -= current_item_name_groups.get(item, {item})
+            for item in item_link["local_items"]:
+                local_items |= current_item_name_groups.get(item, {item})
+            for item in item_link["non_local_items"]:
+                non_local_items |= current_item_name_groups.get(item, {item})
+            local_items &= pool
+            non_local_items &= pool
             item_link["item_pool"] = pool
+            item_link["local_items"] = local_items
+            item_link["non_local_items"] = non_local_items
 
         for group_name, item_link in item_links.items():
             game = item_link["game"]
             group_id, group = self.add_group(group_name, game, set(item_link["players"]))
             group["item_pool"] = item_link["item_pool"]
             group["replacement_items"] = item_link["players"]
+            group["local_items"] = item_link["local_items"]
+            group["non_local_items"] = item_link["non_local_items"]
 
     # intended for unittests
     def set_default_common_options(self):
@@ -768,7 +790,7 @@ class CollectionState():
                 or (self.has('Bombs (10)', player) and enemies < 6))
 
     def can_shoot_arrows(self, player: int) -> bool:
-        if self.world.retro[player]:
+        if self.world.retro_bow[player]:
             return (self.has('Bow', player) or self.has('Silver Bow', player)) and self.can_buy('Single Arrow', player)
         return self.has('Bow', player) or self.has('Silver Bow', player)
 
@@ -889,7 +911,7 @@ class CollectionState():
 
 
 @unique
-class RegionType(int, Enum):
+class RegionType(IntEnum):
     Generic = 0
     LightWorld = 1
     DarkWorld = 2
@@ -1044,7 +1066,7 @@ class Boss():
         return f"Boss({self.name})"
 
 
-class LocationProgressType(Enum):
+class LocationProgressType(IntEnum):
     DEFAULT = 1
     PRIORITY = 2
     EXCLUDED = 3
@@ -1116,19 +1138,29 @@ class Location:
         return "at " + self.name.replace("_", " ").replace("-", " ")
 
 
-class Item():
+class ItemClassification(IntFlag):
+    filler = 0b0000  # aka trash, as in filler items like ammo, currency etc,
+    progression = 0b0001  # Item that is logically relevant
+    useful = 0b0010  # Item that is generally quite useful, but not required for anything logical
+    trap = 0b0100  # detrimental or entirely useless (nothing) item
+    skip_balancing = 0b1000  # should technically never occur on its own
+    # Item that is logically relevant, but progression balancing should not touch.
+    # Typically currency or other counted items.
+    progression_skip_balancing = 0b1001  # only progression gets balanced
+
+    def as_flag(self) -> int:
+        """As Network API flag int."""
+        return int(self & 0b0111)
+
+
+class Item:
     location: Optional[Location] = None
     world: Optional[MultiWorld] = None
     code: Optional[int] = None  # an item with ID None is called an Event, and does not get written to multidata
     name: str
     game: str = "Generic"
     type: str = None
-    # indicates if this is a negative impact item. Causes these to be handled differently by various games.
-    trap: bool = False
-    # change manually to ensure that a specific non-progression item never goes on an excluded location
-    never_exclude = False
-    # item is not considered by progression balancing despite being progression
-    skip_in_prog_balancing: bool = False
+    classification: ItemClassification
 
     # need to find a decent place for these to live and to allow other games to register texts if they want.
     pedestal_credit_text: str = "and the Unknown Item"
@@ -1143,9 +1175,9 @@ class Item():
     map: bool = False
     compass: bool = False
 
-    def __init__(self, name: str, advancement: bool, code: Optional[int], player: int):
+    def __init__(self, name: str, classification: ItemClassification, code: Optional[int], player: int):
         self.name = name
-        self.advancement = advancement
+        self.classification = classification
         self.player = player
         self.code = code
 
@@ -1158,8 +1190,24 @@ class Item():
         return getattr(self, "_pedestal_hint_text", self.name.replace("_", " ").replace("-", " "))
 
     @property
+    def advancement(self) -> bool:
+        return bool(self.classification & ItemClassification.progression)
+
+    @property
+    def skip_in_prog_balancing(self) -> bool:
+        return self.classification == ItemClassification.progression_skip_balancing
+
+    @property
+    def useful(self) -> bool:
+        return bool(self.classification & ItemClassification.useful)
+
+    @property
+    def trap(self) -> bool:
+        return bool(self.classification & ItemClassification.trap)
+
+    @property
     def flags(self) -> int:
-        return self.advancement + (self.never_exclude << 1) + (self.trap << 2)
+        return self.classification.as_flag()
 
     def __eq__(self, other):
         return self.name == other.name and self.player == other.player
@@ -1456,6 +1504,19 @@ class Spoiler():
 
                 outfile.write('\n'.join(path_listings))
             AutoWorld.call_all(self.world, "write_spoiler_end", outfile)
+
+
+class Tutorial(NamedTuple):
+    """Class to build website tutorial pages from a .md file in the world's /docs folder. Order is as follows.
+    Name of the tutorial as it will appear on the site. Concise description covering what the guide will entail.
+    Language the guide is written in. Name of the file ex 'setup_en.md'. Name of the link on the site; game name is
+    filled automatically so 'setup/en' etc. Author or authors."""
+    tutorial_name: str
+    description: str
+    language: str
+    file_name: str
+    link: str
+    author: List[str]
 
 
 seeddigits = 20

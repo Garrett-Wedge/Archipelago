@@ -5,14 +5,15 @@ import random
 import threading
 from typing import Dict, Set, TextIO
 
-from BaseClasses import Region, Entrance, Location, MultiWorld, Item, RegionType, CollectionState
+from BaseClasses import Region, Entrance, Location, MultiWorld, Item, ItemClassification, RegionType, CollectionState, \
+    Tutorial
 from worlds.generic.Rules import set_rule
 import worlds.smz3.TotalSMZ3.Item as TotalSMZ3Item
 from worlds.smz3.TotalSMZ3.World import World as TotalSMZ3World
 from worlds.smz3.TotalSMZ3.Config import Config, GameMode, GanonInvincible, Goal, KeyShuffle, MorphLocation, SMLogic, SwordLocation, Z3Logic
 from worlds.smz3.TotalSMZ3.Location import LocationType, locations_start_id, Location as TotalSMZ3Location
 from worlds.smz3.TotalSMZ3.Patch import Patch as TotalSMZ3Patch, getWord, getWordArray
-from ..AutoWorld import World, AutoLogicRegister
+from ..AutoWorld import World, AutoLogicRegister, WebWorld
 from .Rom import get_base_rom_bytes, SMZ3DeltaPatch
 from .ips import IPS_Patch
 from .Options import smz3_options
@@ -34,6 +35,17 @@ class SMZ3CollectionState(metaclass=AutoLogicRegister):
         return ret
 
 
+class SMZ3Web(WebWorld):
+    tutorials = [Tutorial(
+        "Multiworld Setup Guide",
+        "A guide to setting up the Archipelago Super Metroid and A Link to the Past Crossover randomizer on your computer. This guide covers single-player, multiworld, and related software.",
+        "English",
+        "multiworld_en.md",
+        "multiworld/en",
+        ["lordlou"]
+    )]
+
+
 class SMZ3World(World):
     """
      A python port of Super Metroid & A Link To The Past Crossover Item Randomizer based on v11.2 of Total's SMZ3. 
@@ -47,6 +59,7 @@ class SMZ3World(World):
     location_names: Set[str]
     item_name_to_id = TotalSMZ3Item.lookup_name_to_id
     location_name_to_id: Dict[str, int] = {key : locations_start_id + value.Id for key, value in TotalSMZ3World(Config({}), "", 0, "").locationLookup.items()}
+    web = SMZ3Web()
 
     remote_items: bool = False
     remote_start_inventory: bool = False
@@ -99,11 +112,11 @@ class SMZ3World(World):
         else:
             progressionItems = self.progression 
             for item in self.keyCardsItems:
-                self.world.push_precollected(SMZ3Item(item.Type.name, False, item.Type, self.item_name_to_id[item.Type.name], self.player, item))
+                self.world.push_precollected(SMZ3Item(item.Type.name, ItemClassification.filler, item.Type, self.item_name_to_id[item.Type.name], self.player, item))
 
-        itemPool = [SMZ3Item(item.Type.name, True, item.Type, self.item_name_to_id[item.Type.name], self.player, item) for item in progressionItems] + \
-                    [SMZ3Item(item.Type.name, False, item.Type, self.item_name_to_id[item.Type.name], self.player, item) for item in allJunkItems]
-        self.smz3DungeonItems = [SMZ3Item(item.Type.name, True, item.Type, self.item_name_to_id[item.Type.name], self.player, item) for item in self.dungeon]
+        itemPool = [SMZ3Item(item.Type.name, ItemClassification.progression, item.Type, self.item_name_to_id[item.Type.name], self.player, item) for item in progressionItems] + \
+                    [SMZ3Item(item.Type.name, ItemClassification.filler, item.Type, self.item_name_to_id[item.Type.name], self.player, item) for item in allJunkItems]
+        self.smz3DungeonItems = [SMZ3Item(item.Type.name, ItemClassification.progression, item.Type, self.item_name_to_id[item.Type.name], self.player, item) for item in self.dungeon]
         self.world.itempool += itemPool
 
     def set_rules(self):
@@ -248,7 +261,7 @@ class SMZ3World(World):
                                     self.world.seed,
                                     self.local_random,
                                     self.world.world_name_lookup,
-                                    next(iter(loc.player for loc in self.world.get_locations() if loc.item == self.create_item("SilverArrows"))))
+                                    next(iter(loc.player for loc in self.world.get_locations() if (loc.item.name == "SilverArrows" and loc.item.player == self.player))))
             patches = patcher.Create(self.smz3World.Config)
             patches.update(self.apply_sm_custom_sprite())
             patches.update(self.apply_item_names())
@@ -316,7 +329,8 @@ class SMZ3World(World):
         return False
 
     def create_item(self, name: str) -> Item:
-        return SMZ3Item(name, True, TotalSMZ3Item.ItemType[name], self.item_name_to_id[name], player = self.player)
+        return SMZ3Item(name, ItemClassification.progression,
+                        TotalSMZ3Item.ItemType[name], self.item_name_to_id[name], player = self.player)
 
     def pre_fill(self):
         from Fill import fill_restrictive
@@ -339,7 +353,7 @@ class SMZ3World(World):
                 exception_item = [TotalSMZ3Item.ItemType.BigKeySW, TotalSMZ3Item.ItemType.BigKeySP, TotalSMZ3Item.ItemType.KeyTH]
                 for item in self.smz3DungeonItems:
                     if item.item.Type in exception_item and item.location.always_allow(all_state, item) and not all_state.can_reach(item.location):
-                        item.advancement = False
+                        item.classification = ItemClassification.filler
                         item.item.Progression = False
                         item.location.event = False
                         self.unreachable.append(item.location)
@@ -434,7 +448,7 @@ class SMZ3Location(Location):
 class SMZ3Item(Item):
     game = "SMZ3"
 
-    def __init__(self, name, advancement, type, code, player: int = None, item = None):
+    def __init__(self, name, classification, type, code, player: int = None, item=None):
         self.type = type
         self.item = item
-        super(SMZ3Item, self).__init__(name, advancement, code, player)
+        super(SMZ3Item, self).__init__(name, classification, code, player)

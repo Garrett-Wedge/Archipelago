@@ -11,8 +11,19 @@ from .Regions import create_regions
 from .Rules import set_rules
 from .Options import options
 
-from BaseClasses import Region, Entrance, Location, MultiWorld, Item
-from ..AutoWorld import World
+from BaseClasses import Region, Entrance, Location, MultiWorld, Item, Tutorial, ItemClassification, RegionType
+from ..AutoWorld import World, WebWorld
+
+
+class SubnaticaWeb(WebWorld):
+    tutorials = [Tutorial(
+        "Multiworld Setup Guide",
+        "A guide to setting up the Subnautica randomizer connected to an Archipelago Multiworld",
+        "English",
+        "setup_en.md",
+        "setup/en",
+        ["Berserker"]
+    )]
 
 
 class SubnauticaWorld(World):
@@ -22,6 +33,7 @@ class SubnauticaWorld(World):
     You must find a cure for yourself, build an escape rocket, and leave the planet.
     """
     game: str = "Subnautica"
+    web = SubnaticaWeb()
 
     item_name_to_id = items_lookup_name_to_id
     location_name_to_id = locations_lookup_name_to_id
@@ -62,7 +74,7 @@ class SubnauticaWorld(World):
         self.world.get_location("Aurora - Captain Data Terminal", self.player).place_locked_item(
             neptune_launch_platform)
         self.world.get_location("Neptune Launch", self.player).place_locked_item(
-            SubnauticaItem("Victory", True, None, player=self.player))
+            SubnauticaItem("Victory", ItemClassification.progression, None, player=self.player))
 
     def set_rules(self):
         set_rules(self.world, self.player)
@@ -76,10 +88,13 @@ class SubnauticaWorld(World):
 
     def create_item(self, name: str) -> Item:
         item = lookup_name_to_item[name]
-        return SubnauticaItem(name, item["progression"], item["id"], player=self.player)
+        return SubnauticaItem(name,
+                              ItemClassification.progression if item["progression"] else ItemClassification.filler,
+                              item["id"], player=self.player)
+
 
 def create_region(world: MultiWorld, player: int, name: str, locations=None, exits=None):
-    ret = Region(name, None, name, player)
+    ret = Region(name, RegionType.Generic, name, player)
     ret.world = world
     if locations:
         for location in locations:

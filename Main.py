@@ -1,4 +1,3 @@
-import copy
 import collections
 from itertools import zip_longest, chain
 import logging
@@ -17,7 +16,7 @@ from worlds.alttp.Regions import lookup_vanilla_location_to_entrance
 from Fill import distribute_items_restrictive, flood_items, balance_multiworld_progression, distribute_planned
 from worlds.alttp.Shops import SHOP_ID_START, total_shop_slots, FillDisabledShopSlots
 from Utils import output_path, get_options, __version__, version_tuple
-from worlds.generic.Rules import locality_rules, exclusion_rules
+from worlds.generic.Rules import locality_rules, exclusion_rules, group_locality_rules
 from worlds import AutoWorld
 
 ordered_areas = (
@@ -86,12 +85,12 @@ def main(args, seed=None, baked_server_options: Optional[Dict[str, object]] = No
     numlength = 8
     for name, cls in AutoWorld.AutoWorldRegister.world_types.items():
         if not cls.hidden:
-            logger.info(f"  {name:{longest_name}}: {len(cls.item_names):3} Items | "
-                        f"{len(cls.location_names):3} Locations")
-            logger.info(f"   Item IDs: {min(cls.item_id_to_name):{numlength}} - "
-                        f"{max(cls.item_id_to_name):{numlength}} | "
-                        f"Location IDs: {min(cls.location_id_to_name):{numlength}} - "
-                        f"{max(cls.location_id_to_name):{numlength}}")
+            logger.info(f"  {name:{longest_name}}: {len(cls.item_names):3} "
+                        f"Items (IDs: {min(cls.item_id_to_name):{numlength}} - "
+                        f"{max(cls.item_id_to_name):{numlength}}) | "
+                        f"{len(cls.location_names):3} "
+                        f"Locations (IDs: {min(cls.location_id_to_name):{numlength}} - "
+                        f"{max(cls.location_id_to_name):{numlength}})")
 
     AutoWorld.call_stage(world, "assert_generate")
 
@@ -127,6 +126,7 @@ def main(args, seed=None, baked_server_options: Optional[Dict[str, object]] = No
     if world.players > 1:
         for player in world.player_ids:
             locality_rules(world, player)
+        group_locality_rules(world)
     else:
         world.non_local_items[1].value = set()
         world.local_items[1].value = set()
@@ -144,13 +144,12 @@ def main(args, seed=None, baked_server_options: Optional[Dict[str, object]] = No
     # temporary home for item links, should be moved out of Main
     for group_id, group in world.groups.items():
         def find_common_pool(players: Set[int], shared_pool: Set[str]):
-            advancement = set()
+            classifications = collections.defaultdict(int)
             counters = {player: {name: 0 for name in shared_pool} for player in players}
             for item in world.itempool:
                 if item.player in counters and item.name in shared_pool:
                     counters[item.player][item.name] += 1
-                    if item.advancement:
-                        advancement.add(item.name)
+                    classifications[item.name] |= item.classification
 
             for player in players.copy():
                 if all([counters[player][item] == 0 for item in shared_pool]):
@@ -168,18 +167,18 @@ def main(args, seed=None, baked_server_options: Optional[Dict[str, object]] = No
                 else:
                     for player in players:
                         del(counters[player][item])
-            return counters, advancement
+            return counters, classifications
 
-        common_item_count, common_advancement_items = find_common_pool(group["players"], group["item_pool"])
+        common_item_count, classifications = find_common_pool(group["players"], group["item_pool"])
         if not common_item_count:
             continue
 
         new_itempool = []
         for item_name, item_count in next(iter(common_item_count.values())).items():
-            advancement = item_name in common_advancement_items
             for _ in range(item_count):
                 new_item = group["world"].create_item(item_name)
-                new_item.advancement = advancement
+                # mangle together all original classification bits
+                new_item.classification |= classifications[item_name]
                 new_itempool.append(new_item)
 
         region = Region("Menu", RegionType.Generic, "ItemLink", group_id, world)
@@ -264,7 +263,7 @@ def main(args, seed=None, baked_server_options: Optional[Dict[str, object]] = No
 
             # collect ER hint info
             er_hint_data = {player: {} for player in world.get_game_players("A Link to the Past") if
-                            world.shuffle[player] != "vanilla" or world.retro[player]}
+                            world.shuffle[player] != "vanilla" or world.retro_caves[player]}
 
             for region in world.regions:
                 if region.player in er_hint_data and region.locations:
@@ -304,7 +303,7 @@ def main(args, seed=None, baked_server_options: Optional[Dict[str, object]] = No
             takeanyregions = ["Old Man Sword Cave", "Take-Any #1", "Take-Any #2", "Take-Any #3", "Take-Any #4"]
             for index, take_any in enumerate(takeanyregions):
                 for region in [world.get_region(take_any, player) for player in
-                               world.get_game_players("A Link to the Past") if world.retro[player]]:
+                               world.get_game_players("A Link to the Past") if world.retro_caves[player]]:
                     item = world.create_item(
                         region.shop.inventory[(0 if take_any == "Old Man Sword Cave" else 1)]['item'],
                         region.player)

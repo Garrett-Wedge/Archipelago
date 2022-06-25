@@ -24,6 +24,8 @@ Currently, the following games are supported:
 * ArchipIDLE
 * Hollow Knight
 * The Witness
+* Sonic Adventure 2: Battle
+* Starcraft 2: Wings of Liberty
 
 For setup and instructions check out our [tutorials page](https://archipelago.gg/tutorial/).
 Downloads can be found at [Releases](https://github.com/ArchipelagoMW/Archipelago/releases), including compiled
@@ -64,7 +66,10 @@ Contributions are welcome. We have a few asks of any new contributors.
 
 Otherwise, we tend to judge code on a case to case basis. It is a generally good idea to stick to PEP-8 guidelines to ensure consistency with existing code. (And to make the linter happy.)
 
-For adding a new game to Archipelago please see the docs folder for the relevant information and feel free to ask any questions in the #archipelago-dev channel in our discord.
+For adding a new game to Archipelago and other documentation on how Archipelago functions, please see the docs folder for the relevant information and feel free to ask any questions in the #archipelago-dev channel in our discord.
+
+## FAQ
+For frequently asked questions see the website's [FAQ Page](https://archipelago.gg/faq/en/)
 
 ## Code of Conduct
 We conduct ourselves openly and inclusively here. Please do not contribute to an environment which makes other people uncomfortable. This means that we expect all contributors or participants here to:

@@ -6,10 +6,22 @@ from .Locations import location_table, SM64Location
 from .Options import sm64_options
 from .Rules import set_rules
 from .Regions import create_regions, sm64courses
-from BaseClasses import Region, RegionType, Entrance, Item, MultiWorld
-from ..AutoWorld import World
+from BaseClasses import Item, Tutorial, ItemClassification
+from ..AutoWorld import World, WebWorld
 
 client_version = 1
+
+
+class SM64Web(WebWorld):
+    tutorials = [Tutorial(
+        "Multiworld Setup Guide",
+        "A guide to setting up SM64EX for MultiWorld.",
+        "English",
+        "setup_en.md",
+        "setup/en",
+        ["N00byKing"]
+    )]
+
 
 class SM64World(World):
     """ 
@@ -19,6 +31,8 @@ class SM64World(World):
 
     game: str = "Super Mario 64"
     topology_present = False
+
+    web = SM64Web()
 
     item_name_to_id = item_table
     location_name_to_id = location_table
@@ -49,9 +63,14 @@ class SM64World(World):
 
     def create_item(self, name: str) -> Item:
         item_id = item_table[name]
-        item = SM64Item(name, name != "1Up Mushroom", item_id, self.player)
-        if name == "Power Star": 
-            item.skip_in_prog_balancing = True
+        if name == "1Up Mushroom":
+            classification = ItemClassification.filler
+        elif name == "Power Star":
+            classification = ItemClassification.progression_skip_balancing
+        else:
+            classification = ItemClassification.progression
+        item = SM64Item(name, classification, item_id, self.player)
+
         return item
 
     def generate_basic(self):
@@ -90,11 +109,14 @@ class SM64World(World):
             self.world.get_location("THI: Bob-omb Buddy", self.player).place_locked_item(self.create_item("Cannon Unlock THI"))
             self.world.get_location("RR: Bob-omb Buddy", self.player).place_locked_item(self.create_item("Cannon Unlock RR"))
 
+    def get_filler_item_name(self) -> str:
+        return "1Up Mushroom"
+
     def fill_slot_data(self):
         return {
             "AreaRando": self.area_connections,
             "StarsToFinish": self.world.StarsToFinish[self.player].value,
-            "DeathLink": self.world.DeathLink[self.player].value,
+            "DeathLink": self.world.death_link[self.player].value,
         }
 
     def generate_output(self, output_directory: str):
